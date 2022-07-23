@@ -1,0 +1,38 @@
+.navbar {
+  width: 100%;
+  background: #393e46;
+}
+
+.navbar_container {
+  display: flex;
+  padding: 0 40px;
+  height: 80px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar_logo {
+  font-family: "Bungee", cursive;
+  color: white;
+  font-size: 30px;
+  text-decoration: none;
+}
+
+.navbar_list {
+  display: flex;
+  gap: 30px;
+}
+
+.navbar_list a {
+  font-size: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  height: 100%;
+  padding: 5px;
+}
+
+.navbar_Link_Active {
+  border-bottom: 4px solid #00adb5;
+}

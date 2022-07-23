@@ -1,0 +1,144 @@
+.add {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add_header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+}
+
+.add_header svg {
+  font-size: 36px;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 25px;
+}
+
+.addContainer {
+  width: 800px;
+  padding: 50px;
+  border-radius: 6px;
+  background-color: #222831;
+  box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.75);
+}
+
+.add_selectOption {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add_selectionOption_buttons {
+  display: flex;
+  padding: 20px 0;
+  gap: 40px;
+}
+
+.add_selectionOption_buttons button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: blue;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add_form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add_inputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.add_inputContainer input,
+.add_inputContainer textarea {
+  font-size: 18px;
+  border-radius: 6px;
+  padding: 15px 10px;
+  background-color: #222831;
+  border: 3px solid #393e46;
+  color: #eee;
+  outline: none;
+  transition: 0.3s ease-in-out;
+}
+
+.add_inputContainer input:focus,
+.add_inputContainer textarea:focus {
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 0px 5px rgba(56, 169, 240, 0.75);
+  border-color: rgba(56, 169, 240, 0.75);
+}
+
+.add_inputContainer p {
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
+}
+
+.add_buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.add_buttonContainer button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  background-color: #031542;
+  cursor: pointer;
+  outline: none;
+}
+
+.add_inputContainer input::placeholder,
+.add_inputContainer textarea::placeholder {
+  color: #eee;
+}
+
+.add_inputSub {
+  display: flex;
+  gap: 20px;
+}
+
+.add_inputSub button {
+  border: none;
+  background: red;
+  color: white;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.add_submit {
+  margin-top: 40px;
+  color: white;
+  font-size: 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  background: #00adb5;
+  padding: 15px 0;
+  cursor: pointer;
+}
