@@ -1,16 +1,16 @@
-.product_header {
+.clinet_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 50px;
 }
 
-.product_buttons {
+.client_button {
   display: flex;
   gap: 20px;
 }
 
-.product_buttons button {
+.client_button button {
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -22,57 +22,43 @@
   cursor: pointer;
 }
 
-.product_buttons button:first-child {
+.client_button button:first-child {
   background-color: #eeeeee;
   color: #222831;
 }
 
-.product_body {
+.client_body {
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   padding: 20px;
 }
 
-.product_left {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  padding-right: 25px;
-  min-width: 600px;
+.client_left {
 }
 
-.product_img {
-  width: 300px;
-  border-radius: 5px;
-  flex-basis: 100%;
-  flex: 1;
-  border: 1px solid black;
-  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.75);
-}
-
-.product_right {
+.client_right {
   display: flex;
   justify-content: start;
   width: 100%;
   margin-left: 25px;
 }
 
-.product_info_main {
+.clinet_info {
   display: flex;
   flex-direction: column;
-  align-items: baseline;
   gap: 20px;
-  justify-content: center;
+  width: 100%;
 }
 
-.product_info_main p {
+.clinet_info p {
   font-size: 28px;
   border-bottom: 3px solid #393e46;
   width: 100%;
   padding-bottom: 10px;
 }
 
-.product_info_main span {
+.clinet_info span {
   font-weight: 700;
   font-size: 30px;
 }

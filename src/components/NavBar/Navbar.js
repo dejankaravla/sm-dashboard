@@ -1,12 +1,8 @@
 import React from "react";
 import "./Navbar.css";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
-  const { route } = useParams();
-
-  console.log(route);
-
   return (
     <div className="navbar">
       <div className="navbar_container">

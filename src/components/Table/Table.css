@@ -136,3 +136,7 @@ th {
   background-color: #eeeeee;
   color: #222831;
 }
+
+tfoot {
+  font-size: 20px;
+}

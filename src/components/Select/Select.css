@@ -22,7 +22,7 @@
 }
 
 .select_container input {
-  border: none;
+  border: none !important;
   outline: none;
   color: #eee;
   width: 100%;
@@ -51,7 +51,7 @@
 }
 
 .select_Results p {
-  color: #eee;
+  color: #eee !important;
   padding: 10px;
   font-size: 16px;
   font-weight: 400;

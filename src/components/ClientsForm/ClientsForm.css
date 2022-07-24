@@ -1,4 +1,4 @@
-.add {
+.client_form {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.addContainer {
+.client_form_container {
   width: 800px;
   padding: 50px;
   border-radius: 6px;
@@ -18,35 +18,30 @@
   box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.75);
 }
 
-.add_header {
+.client_form_header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
 }
 
-.add_header svg {
+.client_form_header svg {
   font-size: 36px;
   cursor: pointer;
 }
 
-h1 {
-  font-size: 25px;
-}
-
-.add_form {
+.client_form_form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.add_inputContainer {
+.client_form_inputContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.add_inputContainer input,
-.add_inputContainer textarea {
+.client_form_inputContainer input {
   font-size: 18px;
   border-radius: 6px;
   padding: 15px 10px;
@@ -57,15 +52,13 @@ h1 {
   transition: 0.3s ease-in-out;
 }
 
-.add_inputContainer input:focus,
-.add_inputContainer textarea:focus {
+.client_form_inputContainer input:focus {
   transition: 0.3s ease-in-out;
   box-shadow: 0px 0px 5px rgba(56, 169, 240, 0.75);
   border-color: rgba(56, 169, 240, 0.75);
 }
 
-.add_inputContainer input::placeholder,
-.add_inputContainer textarea::placeholder {
+.client_form_inputContainer input::placeholder {
   color: #eee;
 }
 
@@ -75,7 +68,7 @@ h1 {
   font-weight: 600;
 }
 
-.add_submit {
+.client_form_submit {
   margin-top: 40px;
   color: white;
   font-size: 20px;

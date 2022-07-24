@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import "./ProductPage.css";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import ProductForm from "../../components/ProductForm/ProductForm";
+import Loader from "../../components/Loader/Loader";
 
 function ProductPage() {
   const [productData, setProductData] = useState({});
@@ -17,26 +18,41 @@ function ProductPage() {
 
   const getProductData = () => {
     setLoading(true);
-    axios.get(`http://localhost:8000/products/${id}`).then((res) => {
-      setProductData(res.data);
-      setLoading(false);
-    });
+    axios
+      .get(`http://localhost:8000/products/${id}`)
+      .then((res) => {
+        setProductData(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getProductClasses = () => {
     setLoading(true);
-    axios.get(`http://localhost:8000/productClasses`).then((res) => {
-      setProductClasses(res.data);
-      setLoading(false);
-    });
+    axios
+      .get(`http://localhost:8000/productClasses`)
+      .then((res) => {
+        setProductClasses(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const deleteProduct = () => {
     setLoading(true);
-    axios.delete(`http://localhost:8000/products/${id}`).then((res) => {
-      setLoading(false);
-      navigate("/products");
-    });
+    axios
+      .delete(`http://localhost:8000/products/${id}`)
+      .then((res) => {
+        setLoading(false);
+        navigate("/products");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -56,9 +72,7 @@ function ProductPage() {
           formType="edit"
         />
       )}
-      <div className="products_loader">
-        <ClipLoader size={100} color="red" loading={loading} />
-      </div>
+      <Loader loading={loading} />
       {!loading && (
         <div className="product_container">
           <div className="product_header">
@@ -111,7 +125,7 @@ function ProductPage() {
                 </p>
                 <p>
                   <span>Balance: </span>
-                  {productData.purchasePrice} €
+                  {productData.price - productData.purchasePrice} €
                 </p>
                 <p>
                   <span>Description: </span>

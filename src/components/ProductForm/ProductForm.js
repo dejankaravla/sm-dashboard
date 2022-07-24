@@ -89,8 +89,6 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
     }
   }, [item.productClass]);
 
-  console.log(item);
-
   return (
     <div className="add">
       {error && <ErrorMessage setError={setError} errorMessage={error} />}
@@ -102,7 +100,7 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
         <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)} className="add_form">
           <div className="add_inputContainer">
             <input placeholder="Product Name" {...register("name", { required: true })} />
-            {errors.name && <p>Product name is required.</p>}
+            {errors.name && <p className="error_message">Product name is required.</p>}
           </div>
           <div className="add_inputContainer">
             <Controller
@@ -124,7 +122,7 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
                 );
               }}
             />
-            {errors.productClass && <p>Product Class is required.</p>}
+            {errors.productClass && <p className="error_message">Product Class is required.</p>}
           </div>
           <div className="add_inputContainer">
             <Controller
@@ -147,11 +145,11 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
                 />
               )}
             />
-            {errors.productSubclass && <p>Product Subclass is required.</p>}
+            {errors.productSubclass && <p className="error_message">Product Subclass is required.</p>}
           </div>
           <div className="add_inputContainer">
             <input min="0" placeholder="Price" type="number" {...register("price", { required: true })} />
-            {errors.price && <p>Price is required.</p>}
+            {errors.price && <p className="error_message">Price is required.</p>}
           </div>
           <div className="add_inputContainer">
             <input min="0" placeholder="Quantity" type="number" {...register("quantity")} />

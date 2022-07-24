@@ -4,7 +4,7 @@ import "./Products.css";
 import Table from "../../components/Table/Table";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import ProductsSidebar from "../../components/ProductsSidebar/ProductsSidebar";
-import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "../../components/Loader/Loader";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -12,6 +12,63 @@ function Products() {
   const [productForm, setProductForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
+
+  const columns = [
+    {
+      accessorKey: "name",
+      id: "Product Name",
+      header: () => <span>Product Name</span>,
+      footer: (info) => info.column.id,
+      cell: (info) => info.getValue(),
+    },
+    {
+      accessorFn: (row) => row.productClass,
+      id: "Class",
+      header: () => <span>Class</span>,
+      footer: (info) => info.column.id,
+    },
+    {
+      accessorFn: (row) => row.productSubclass,
+      id: "Subclass",
+      header: () => <span>Subclass</span>,
+      footer: (info) => info.column.id,
+    },
+    {
+      accessorFn: (row) => row.price + " €",
+      id: "Price",
+      cell: (info) => <i>{info.getValue()}</i>,
+      header: () => <span>Price</span>,
+      footer: (info) => info.column.id,
+    },
+    {
+      accessorKey: "quantity",
+      id: "Quantity",
+      header: () => <span>Quantity</span>,
+      footer: (info) => {
+        return info.column.id;
+      },
+    },
+    {
+      accessorFn: (row) => row.purchasePrice + " €",
+      id: "Purchase Price",
+      cell: (info) => <i>{info.getValue()}</i>,
+      header: () => <span>Purchase Price</span>,
+      footer: (info) => info.column.id,
+    },
+    {
+      accessorFn: (row) => row.price - row.purchasePrice + " €",
+      id: "Balance",
+      cell: (info) => <i>{info.getValue()}</i>,
+      header: "Balance",
+      footer: (info) => info.column.id,
+    },
+    {
+      accessorKey: "published",
+      id: "Published",
+      header: () => <span>Published</span>,
+      footer: (info) => info.column.id,
+    },
+  ];
 
   const getProducts = (option) => {
     setLoading(true);
@@ -42,9 +99,7 @@ function Products() {
 
   return (
     <div className="products">
-      <div className="products_loader">
-        <ClipLoader size={100} color="red" loading={loading} />
-      </div>
+      <Loader loading={loading} />
       <div className="products_container">
         <ProductsSidebar
           productClasses={productClasses}
@@ -55,10 +110,12 @@ function Products() {
         <div className="products_display">
           {!loading && (
             <Table
-              products={products}
-              getProducts={getProducts}
-              setProductForm={setProductForm}
-              header={selectedSubcategory}
+              data={products}
+              getData={getProducts}
+              setAddNew={setProductForm}
+              header={selectedSubcategory || "All Products"}
+              columns={columns}
+              addButtonName="Add Product"
             />
           )}
           {productForm && (
