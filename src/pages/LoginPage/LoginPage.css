@@ -61,6 +61,7 @@
   background-color: transparent;
   color: #eee;
   padding-left: 10px;
+  height: 100%;
 }
 
 .login_input input::placeholder {

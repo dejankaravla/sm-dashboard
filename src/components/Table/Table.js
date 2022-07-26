@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./Table.css";
 import {
   flexRender,
@@ -15,8 +15,10 @@ import { useNavigate } from "react-router-dom";
 import DebouncedInput from "./DebouncedInput";
 import Filter from "./Filter";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
+import ReactToPrint, { PrintContextConsumer } from "react-to-print";
 
-function Table({ data, getData, header = "All Products", setAddNew, columns, addButtonName }) {
+
+const Table = ({ data, getData, header = "All Products", setAddNew, columns, addButtonName }) => {
   const navigate = useNavigate();
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -29,6 +31,8 @@ function Table({ data, getData, header = "All Products", setAddNew, columns, add
     });
     return itemRank.passed;
   };
+
+  const ref = useRef()
 
   const table = useReactTable({
     data,
@@ -49,13 +53,24 @@ function Table({ data, getData, header = "All Products", setAddNew, columns, add
     debugColumns: false,
   });
 
+  useEffect(() => {
+    console.log(ref.current);
+  }, [data])
+
+
   return (
     <div className="p-2">
       <div className="table_button_container">
         <h1>{header}</h1>
         <div className="table_buttons">
           <button onClick={() => setAddNew(true)}>{addButtonName}</button>
-          <button onClick={() => getData()}>Print</button>
+          <ReactToPrint documentTitle={header} bodyClass="printDocument" content={() => ref.current}>
+            <PrintContextConsumer>
+              {({ handlePrint }) => (
+                <button onClick={handlePrint}>Print</button>
+              )}
+            </PrintContextConsumer>
+          </ReactToPrint>
           <button onClick={() => getData()}>Refresh</button>
         </div>
       </div>
@@ -66,27 +81,26 @@ function Table({ data, getData, header = "All Products", setAddNew, columns, add
           placeholder="Search all columns..."
         />
       </div>
-      <table>
+      <table ref={ref} >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <>
-                  <th className="table_header_container" key={header.id}>
-                    <span className="table_header" onClick={header.column.getToggleSortingHandler()}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                      {{
-                        asc: <MdKeyboardArrowUp />,
-                        desc: <MdKeyboardArrowDown />,
-                      }[header.column.getIsSorted()] ?? ""}
-                    </span>
-                    {header.column.getCanFilter() ? (
-                      <div>
-                        <Filter column={header.column} table={table} />
-                      </div>
-                    ) : null}
-                  </th>
-                </>
+                <th className="table_header_container" key={header.id}>
+                  <span className="table_header" onClick={header.column.getToggleSortingHandler()}>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                    {{
+                      asc: <MdKeyboardArrowUp />,
+                      desc: <MdKeyboardArrowDown />,
+                    }[header.column.getIsSorted()] ?? ""}
+                  </span>
+                  {header.column.getCanFilter() ? (
+                    <div>
+                      <Filter column={header.column} table={table} />
+                    </div>
+                  ) : null}
+                </th>
+
               ))}
             </tr>
           ))}
@@ -119,7 +133,7 @@ function Table({ data, getData, header = "All Products", setAddNew, columns, add
         </tfoot>
       </table>
       <div className="h-4" />
-    </div>
+    </div >
   );
 }
 

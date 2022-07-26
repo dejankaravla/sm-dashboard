@@ -3,7 +3,6 @@ import "./ProductPage.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import Loader from "../../components/Loader/Loader";
 
@@ -62,17 +61,9 @@ function ProductPage() {
 
   return (
     <div className="product">
-      {productForm && (
-        <ProductForm
-          setProductForm={setProductForm}
-          setLoading={setLoading}
-          productClasses={productClasses}
-          getData={getProductData}
-          productData={productData}
-          formType="edit"
-        />
-      )}
       <Loader loading={loading} />
+
+
       {!loading && (
         <div className="product_container">
           <div className="product_header">
@@ -141,10 +132,30 @@ function ProductPage() {
                       day: "numeric",
                     })}
                 </p>
+                <p>
+                  <span>Updated At: </span>
+                  {productData.dateModified &&
+                    new Date(productData.dateModified).toLocaleString("en-GB", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                </p>
               </div>
             </div>
           </div>
         </div>
+      )}
+      {productForm && (
+        <ProductForm
+          setProductForm={setProductForm}
+          setLoading={setLoading}
+          productClasses={productClasses}
+          getData={getProductData}
+          productData={productData}
+          formType="edit"
+        />
       )}
     </div>
   );

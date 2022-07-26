@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import "./LoginPage.css";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogin } from "../../store/users/usersAction";
+import Loader from '../../components/Loader/Loader'
 
-const LoginPage = ({ setAuthenticate }) => {
-  const [notAuthenticateMessage, setNotAuthenticateMessage] = useState("");
+
+const LoginPage = () => {
+  const id = useSelector(({ users }) => users._id);
+
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false)
+
+  const dispatch = useDispatch()
+
   const {
     register,
     handleSubmit,
@@ -12,33 +22,31 @@ const LoginPage = ({ setAuthenticate }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    axios
-      .get("http://localhost:8000/", { params: { ...data } })
+    setLoading(true)
+    axios.get("http://localhost:8000/", { params: { ...data } })
       .then((res) => {
-        if (res.data.login) {
-          setAuthenticate(true);
-        }
+        setLoading(false)
+        dispatch(handleLogin(res.data))
       })
       .catch((error) => {
-        setAuthenticate(false);
-        setNotAuthenticateMessage(error.response.data.error);
+        setLoading(false)
+        setResponse(error && error.response && error.response.data && error.response.data.error || "No response from server.");
         setTimeout(() => {
-          setNotAuthenticateMessage(false);
-        }, 5000);
+          setResponse('')
+        }, 7000);
       });
   };
 
   return (
     <div className="login">
-      <div className="login_container">
+      <Loader loading={loading} />
+      {!loading && <div className="login_container">
         <div className="login_header">
           <h1>Login</h1>
         </div>
-
         <div className="login_error">
-          <p>{notAuthenticateMessage}</p>
+          <p>{response}</p>
         </div>
-
         <form className="login_form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login_input_containe">
             <div className="login_input">
@@ -48,13 +56,13 @@ const LoginPage = ({ setAuthenticate }) => {
           </div>
           <div className="login_input_containe">
             <div className="login_input">
-              <input {...register("password", { required: true })} placeholder="Password" type="text" />
+              <input {...register("password", { required: true })} placeholder="Password" type="password" />
             </div>
             <div className="login_error_small">{errors.password && <p>Password is required</p>}</div>
           </div>
           <input className="login_submit" type="submit" />
         </form>
-      </div>
+      </div>}
     </div>
   );
 };

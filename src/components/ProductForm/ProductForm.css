@@ -49,7 +49,7 @@ h1 {
 .add_inputContainer textarea {
   font-size: 18px;
   border-radius: 6px;
-  padding: 15px 10px;
+  padding: 10px 10px;
   background-color: #222831;
   border: 3px solid #393e46;
   color: #eee;
@@ -76,7 +76,7 @@ h1 {
 }
 
 .add_submit {
-  margin-top: 40px;
+  margin-top: 20px;
   color: white;
   font-size: 20px;
   border-radius: 6px;

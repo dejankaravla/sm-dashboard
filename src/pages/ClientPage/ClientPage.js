@@ -92,15 +92,6 @@ const ClientPage = () => {
 
   return (
     <div className="client">
-      {clientsForm && (
-        <ClientsForm
-          setClientsForm={setClientsForm}
-          setLoading={setLoading}
-          getData={getClientData}
-          formType="edit"
-          clientData={clientData}
-        />
-      )}
       <Loader loading={loading} />
       <div className="client_container">
         <div className="clinet_header">
@@ -119,10 +110,6 @@ const ClientPage = () => {
               <p>
                 <span>Username: </span>
                 {clientData.name}
-              </p>
-              <p>
-                <span>Password: </span>
-                {clientData.password}
               </p>
               <p>
                 <span>Client Type: </span>
@@ -166,6 +153,15 @@ const ClientPage = () => {
           </div>
         </div>
       </div>
+      {clientsForm && (
+        <ClientsForm
+          setClientsForm={setClientsForm}
+          setLoading={setLoading}
+          getData={getClientData}
+          formType="edit"
+          clientData={clientData}
+        />
+      )}
     </div>
   );
 };

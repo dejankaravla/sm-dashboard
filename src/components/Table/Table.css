@@ -2,6 +2,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  min-height: 100vh;
 }
 
 table {
@@ -139,4 +141,25 @@ th {
 
 tfoot {
   font-size: 20px;
+}
+
+.printDocument {
+  display: flex;
+  flex-direction: column;
+}
+
+.printDocument table {
+  border-radius: 0;
+}
+
+.printDocument thead th div {
+  display: none;
+}
+
+.printDocument thead th span {
+  font-size: 16px;
+}
+
+.printDocument tfoot tr th {
+  font-size: 16px;
 }

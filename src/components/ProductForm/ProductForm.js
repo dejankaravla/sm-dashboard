@@ -14,7 +14,7 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, },
     control,
     resetField,
     watch,
@@ -56,9 +56,13 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
       for (let key in data) {
         fd.append(key, data[key]);
       }
-      for (let i = 0; i < selectedFile.length; i++) {
-        fd.append("file", selectedFile[i]);
+      if (selectedFile.length > 0) {
+        for (let i = 0; i < selectedFile.length; i++) {
+          fd.append("file", selectedFile[i]);
+        }
       }
+
+
       axios
         .patch(`http://localhost:8000/products/`, fd)
         .then((res) => {
@@ -156,13 +160,13 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
           </div>
 
           <div className="add_inputContainer">
-            <textarea rows="10" placeholder="Description" {...register("description")}></textarea>
+            <textarea rows="5" placeholder="Description" {...register("description")}></textarea>
           </div>
           <div className="add_inputContainer">
             <input type="number" min="0" placeholder="Purchase Price" {...register("purchasePrice")} />
           </div>
           <div className="add_inputContainer">
-            <input onChange={(e) => setImageHandler(e)} type="file" multiple accept=".jpeg, .png, .jpg" />
+            <input {...register('images')} onChange={(e) => setImageHandler(e)} type="file" multiple accept=".jpeg, .png, .jpg" />
           </div>
           <input className="add_submit" type="submit" />
         </form>

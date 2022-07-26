@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
-import "./ProductClasses.css";
+import "./ProductCategories.css";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { HiOutlineTrash } from "react-icons/hi";
 
-const ProductClasses = () => {
-  const [productClasses, setProductClasses] = useState([]);
+const ProductCategories = () => {
+  const [productCategories, setProductCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newClass, setNewClass] = useState("");
   const [error, setError] = useState("");
 
-  const getProductClasses = () => {
+  const getProductCategories = () => {
     setLoading(true);
     axios.get(`http://localhost:8000/productClasses`).then((res) => {
-      setProductClasses(res.data);
+      setProductCategories(res.data);
       setLoading(false);
     });
   };
 
-  const createNewClass = () => {
+  const createNewCategory = () => {
     setLoading(true);
     const newData = {
       name: { value: newClass.toLowerCase(), label: newClass.charAt(0).toUpperCase() + newClass.slice(1) },
@@ -27,7 +27,7 @@ const ProductClasses = () => {
     axios
       .post(`http://localhost:8000/productClasses/`, newData)
       .then((res) => {
-        getProductClasses();
+        getProductCategories();
         setNewClass("");
         setLoading(false);
       })
@@ -45,7 +45,7 @@ const ProductClasses = () => {
     axios
       .delete(`http://localhost:8000/productClasses/${_id}`)
       .then((res) => {
-        getProductClasses();
+        getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
@@ -80,7 +80,7 @@ const ProductClasses = () => {
     axios
       .patch(`http://localhost:8000/productClasses/`, productClass)
       .then((res) => {
-        getProductClasses();
+        getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
@@ -100,7 +100,7 @@ const ProductClasses = () => {
     axios
       .patch(`http://localhost:8000/productClasses/`, productClass)
       .then((res) => {
-        getProductClasses();
+        getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
@@ -113,7 +113,7 @@ const ProductClasses = () => {
   };
 
   useEffect(() => {
-    getProductClasses();
+    getProductCategories();
   }, []);
 
   return (
@@ -129,17 +129,17 @@ const ProductClasses = () => {
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              createNewClass();
+              createNewCategory();
             }
           }}
           value={newClass}
           placeholder="Create New Product Category"
           name="productClass"
         />
-        <button onClick={createNewClass}>Submit</button>
+        <button onClick={createNewCategory}>Submit</button>
       </div>
       <div className="productClasses_container">
-        {productClasses.map((pClass) => {
+        {productCategories.map((pClass) => {
           return (
             <div className="productClass">
               <div className="productClass_header">
@@ -152,7 +152,6 @@ const ProductClasses = () => {
                   return (
                     <div className="productSubClass">
                       <span>{sub.label}</span>
-                      {/* <button onClick={() => deleteSubclass(pClass, sub)}>Delete</button> */}
                       <HiOutlineTrash className="sub_Trash" onClick={() => deleteSubclass(pClass, sub)} />
                     </div>
                   );
@@ -177,4 +176,4 @@ const ProductClasses = () => {
   );
 };
 
-export default ProductClasses;
+export default ProductCategories;
