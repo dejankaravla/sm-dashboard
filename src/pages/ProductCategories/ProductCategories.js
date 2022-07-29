@@ -9,7 +9,7 @@ const ProductCategories = () => {
   const [productCategories, setProductCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newClass, setNewClass] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
 
   const getProductCategories = () => {
     setLoading(true);
@@ -121,7 +121,7 @@ const ProductCategories = () => {
       <div className="products_loader">
         <ClipLoader size={100} color="red" loading={loading} />
       </div>
-      {error && <ErrorMessage setError={setError} errorMessage={error} />}
+      {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       <div className="productClasses_controls">
         <input
           onChange={(e) => {

@@ -16,6 +16,7 @@ import DebouncedInput from "./DebouncedInput";
 import Filter from "./Filter";
 import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import ReactToPrint, { PrintContextConsumer } from "react-to-print";
+import { Link } from "react-router-dom";
 
 
 const Table = ({ data, getData, header = "All Products", setAddNew, columns, addButtonName }) => {
@@ -53,17 +54,17 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
     debugColumns: false,
   });
 
-  useEffect(() => {
-    console.log(ref.current);
-  }, [data])
 
+  const buttonName = addButtonName.replace(' ', '')
+
+  console.log(buttonName);
 
   return (
     <div className="p-2">
       <div className="table_button_container">
         <h1>{header}</h1>
         <div className="table_buttons">
-          <button onClick={() => setAddNew(true)}>{addButtonName}</button>
+          <Link to={`/${addButtonName.replace(' ', '')}`} >{addButtonName}</Link>
           <ReactToPrint documentTitle={header} bodyClass="printDocument" content={() => ref.current}>
             <PrintContextConsumer>
               {({ handlePrint }) => (

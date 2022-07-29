@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./ProductForm.css";
 import { useForm, Controller } from "react-hook-form";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Select from "../Select/Select";
-import { IoClose } from "react-icons/io5";
 
-function ProductForm({ setProductForm, productClasses, setLoading, productData, formType, getData }) {
+function ProductForm({ formType }) {
+  const [productData, setProductData] = useState({})
+  const [productClasses, setProductClasses] = useState([])
   const [productSubClasses, setProductSubClasses] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState([]);
+
+  const setImageHandler = (e) => {
+    setSelectedFile([...e.target.files]);
+  };
+
 
   const {
     register,
@@ -18,15 +25,48 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
     control,
     resetField,
     watch,
-  } = useForm({ defaultValues: productData });
+    reset
+  } = useForm();
 
-  const setImageHandler = (e) => {
-    setSelectedFile([...e.target.files]);
+  const { id } = useParams()
+  const navigate = useNavigate()
+
+  const getProductData = () => {
+    axios
+      .get(`http://localhost:8000/products/${id}`)
+      .then((res) => {
+        setProductData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  const getProductClasses = () => {
+    axios
+      .get(`http://localhost:8000/productClasses`)
+      .then((res) => {
+        setProductClasses(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (id) {
+      getProductData()
+    }
+    getProductClasses()
+  }, [])
+
+  useEffect(() => {
+    reset({ ...productData })
+  }, [productData])
+
 
   const onSubmit = (data) => {
     if (formType === "add") {
-      setLoading(true);
       const fd = new FormData();
       for (let key in data) {
         fd.append(key, data[key]);
@@ -38,20 +78,16 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
       axios
         .post(`http://localhost:8000/products/`, fd)
         .then((res) => {
-          setLoading(false);
-          getData();
-          setProductForm(false);
+          navigate('/products')
         })
         .catch((error) => {
           setError(error.response.data.error);
-          setLoading(false);
           setTimeout(() => {
             setError("");
           }, 3000);
         });
     }
     if (formType === "edit") {
-      setLoading(true);
       const fd = new FormData();
       for (let key in data) {
         fd.append(key, data[key]);
@@ -62,17 +98,13 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
         }
       }
 
-
       axios
         .patch(`http://localhost:8000/products/`, fd)
         .then((res) => {
-          setLoading(false);
-          getData();
-          setProductForm(false);
+          navigate(`/products/${id}`)
         })
         .catch((error) => {
           setError(error.response.data.error);
-          setLoading(false);
           setTimeout(() => {
             setError("");
           }, 3000);
@@ -93,13 +125,16 @@ function ProductForm({ setProductForm, productClasses, setLoading, productData, 
     }
   }, [item.productClass]);
 
+  // console.log('ITEM', item);
+  // console.log('Product Data', productData);
+  // console.log(id);
+
   return (
     <div className="add">
-      {error && <ErrorMessage setError={setError} errorMessage={error} />}
+      {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       <div className="addContainer">
         <div className="add_header">
           <h1>{formType.toUpperCase()} PRODUCT</h1>
-          <IoClose onClick={() => setProductForm(false)} />
         </div>
         <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)} className="add_form">
           <div className="add_inputContainer">

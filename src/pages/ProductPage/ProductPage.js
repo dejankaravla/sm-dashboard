@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./ProductPage.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import Loader from "../../components/Loader/Loader";
 
 function ProductPage() {
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [productClasses, setProductClasses] = useState([]);
-  const [productForm, setProductForm] = useState(false);
 
   let { id } = useParams();
   const navigate = useNavigate();
@@ -28,18 +26,6 @@ function ProductPage() {
       });
   };
 
-  const getProductClasses = () => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:8000/productClasses`)
-      .then((res) => {
-        setProductClasses(res.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const deleteProduct = () => {
     setLoading(true);
@@ -56,7 +42,6 @@ function ProductPage() {
 
   useEffect(() => {
     getProductData();
-    getProductClasses();
   }, []);
 
   return (
@@ -70,7 +55,7 @@ function ProductPage() {
             <h2>ID: {productData._id}</h2>
 
             <div className="product_buttons">
-              <button onClick={() => setProductForm(true)}>Edit</button>
+              <Link to={`/EditProduct/${productData._id}`}>Edit</Link>
               <button onClick={() => deleteProduct()}>Delete</button>
             </div>
           </div>
@@ -132,31 +117,22 @@ function ProductPage() {
                       day: "numeric",
                     })}
                 </p>
-                <p>
+                {productData.dateModified && <p>
                   <span>Updated At: </span>
-                  {productData.dateModified &&
-                    new Date(productData.dateModified).toLocaleString("en-GB", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                </p>
+
+                  {new Date(productData.dateModified).toLocaleString("en-GB", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>}
               </div>
             </div>
           </div>
         </div>
       )}
-      {productForm && (
-        <ProductForm
-          setProductForm={setProductForm}
-          setLoading={setLoading}
-          productClasses={productClasses}
-          getData={getProductData}
-          productData={productData}
-          formType="edit"
-        />
-      )}
+
     </div>
   );
 }

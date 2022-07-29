@@ -23,14 +23,14 @@ function Products() {
     },
     {
       accessorFn: (row) => row.productClass,
-      id: "Class",
-      header: () => <span>Class</span>,
+      id: "Category",
+      header: () => <span>Category</span>,
       footer: (info) => info.column.id,
     },
     {
       accessorFn: (row) => row.productSubclass,
-      id: "Subclass",
-      header: () => <span>Subclass</span>,
+      id: "Subcategory",
+      header: () => <span>Subcategory</span>,
       footer: (info) => info.column.id,
     },
     {
@@ -81,6 +81,9 @@ function Products() {
       .then((res) => {
         setProducts(res.data);
         setLoading(false);
+      }).catch((error) => {
+        setLoading(false)
+        console.log(error);
       });
   };
 

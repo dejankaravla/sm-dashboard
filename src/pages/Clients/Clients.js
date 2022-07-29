@@ -21,7 +21,10 @@ const Clients = () => {
       .then((res) => {
         setClients(res.data);
         setLoading(false);
-      });
+      }).catch((error) => {
+        setLoading(false)
+        console.log(error);
+      })
   };
 
   useEffect(() => {
@@ -31,16 +34,10 @@ const Clients = () => {
   const columns = [
     {
       accessorKey: "name",
-      id: " Username",
-      header: () => <span>Username</span>,
+      id: " Name",
+      header: () => <span>Name</span>,
       footer: (info) => info.column.id,
       cell: (info) => info.getValue(),
-    },
-    {
-      accessorFn: (row) => row.password,
-      id: "Password",
-      header: () => <span>Password</span>,
-      footer: (info) => info.column.id,
     },
     {
       accessorFn: (row) => row.clientType,
@@ -69,20 +66,6 @@ const Clients = () => {
       id: "Mobile",
       cell: (info) => <i>{info.getValue()}</i>,
       header: () => <span>Mobile</span>,
-      footer: (info) => info.column.id,
-    },
-    {
-      accessorFn: (row) =>
-        new Date(row.dateCreated).toLocaleString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
-      id: "Created",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: "Created",
       footer: (info) => info.column.id,
     },
   ];

@@ -10,7 +10,8 @@
   gap: 20px;
 }
 
-.client_button button {
+.client_button button,
+.client_button a {
   padding: 10px 20px;
   border: none;
   outline: none;
@@ -22,9 +23,10 @@
   cursor: pointer;
 }
 
-.client_button button:first-child {
+.client_button a {
   background-color: #eeeeee;
   color: #222831;
+  text-decoration: none;
 }
 
 .client_body {

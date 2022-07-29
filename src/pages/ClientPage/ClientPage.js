@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./ClientPage.css";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ClientsForm from "../../components/ClientsForm/ClientsForm";
 import Loader from "../../components/Loader/Loader";
 import Table from "../../components/Table/Table";
 
 const ClientPage = () => {
   const [clientData, setClientData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [clientsForm, setClientsForm] = useState(false);
 
   let { id } = useParams();
   const navigate = useNavigate();
@@ -97,7 +95,7 @@ const ClientPage = () => {
         <div className="clinet_header">
           <h2>ID: {clientData._id}</h2>
           <div className="client_button">
-            <button onClick={() => setClientsForm(true)}>Edit</button>
+            <Link to={`/EditClient/${clientData._id}`} >Edit</Link>
             <button onClick={() => deleteClient()}>Delete</button>
           </div>
         </div>
@@ -108,7 +106,7 @@ const ClientPage = () => {
           <div className="client_right">
             <div className="clinet_info">
               <p>
-                <span>Username: </span>
+                <span>Name: </span>
                 {clientData.name}
               </p>
               <p>
@@ -153,15 +151,6 @@ const ClientPage = () => {
           </div>
         </div>
       </div>
-      {clientsForm && (
-        <ClientsForm
-          setClientsForm={setClientsForm}
-          setLoading={setLoading}
-          getData={getClientData}
-          formType="edit"
-          clientData={clientData}
-        />
-      )}
     </div>
   );
 };

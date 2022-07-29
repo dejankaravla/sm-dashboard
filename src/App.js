@@ -10,8 +10,12 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProtectedRoutes from "./ProtectedRoutes";
 import ProductCategories from "./pages/ProductCategories/ProductCategories";
+import Orders from "./pages/Orders/Orders";
+import OrderForm from "./components/OrderForm/OrderForm";
 
 import { useSelector } from "react-redux";
+import ProductForm from "./components/ProductForm/ProductForm";
+import ClientsForm from "./components/ClientsForm/ClientsForm";
 
 const App = () => {
   const isLoggedIn = useSelector(({ users }) => users.isLoggedIn);
@@ -29,6 +33,13 @@ const App = () => {
           <Route path="productClasses" element={<ProductCategories />} />
           <Route path="clients" element={<Clients />} />
           <Route path="clients/:id" element={<ClientPage />} />
+          <Route path='orders' element={<Orders />} />
+          <Route path="AddProduct" element={<ProductForm formType='add' />} />
+          <Route path="EditProduct/:id" element={<ProductForm formType='edit' />} />
+          <Route path="AddClient" element={<ClientsForm formType='add' />} />
+          <Route path="EditClient/:id" element={<ClientsForm formType='edit' />} />
+          <Route path="AddOrder" element={<OrderForm formType='add' />} />
+          <Route path="EditOrder" element={<OrderForm formType='edit' />} />
         </Route>
 
 
