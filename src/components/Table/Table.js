@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import "./Table.css";
 import {
   flexRender,
@@ -18,10 +18,10 @@ import { MdKeyboardArrowUp, MdKeyboardArrowDown } from "react-icons/md";
 import ReactToPrint, { PrintContextConsumer } from "react-to-print";
 import { Link } from "react-router-dom";
 
-
-const Table = ({ data, getData, header = "All Products", setAddNew, columns, addButtonName }) => {
+const Table = ({ data, getData, header = "All Products", columns, addButtonName, sort, route = "" }) => {
   const navigate = useNavigate();
-  const [sorting, setSorting] = useState([]);
+
+  const [sorting, setSorting] = useState(sort || []);
   const [globalFilter, setGlobalFilter] = useState("");
   const [columnFilters, setColumnFilters] = useState([]);
 
@@ -33,7 +33,7 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
     return itemRank.passed;
   };
 
-  const ref = useRef()
+  const ref = useRef();
 
   const table = useReactTable({
     data,
@@ -54,27 +54,22 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
     debugColumns: false,
   });
 
-
-  const buttonName = addButtonName.replace(' ', '')
-
-  console.log(buttonName);
-
   return (
     <div className="p-2">
-      <div className="table_button_container">
-        <h1>{header}</h1>
-        <div className="table_buttons">
-          <Link to={`/${addButtonName.replace(' ', '')}`} >{addButtonName}</Link>
-          <ReactToPrint documentTitle={header} bodyClass="printDocument" content={() => ref.current}>
-            <PrintContextConsumer>
-              {({ handlePrint }) => (
-                <button onClick={handlePrint}>Print</button>
-              )}
-            </PrintContextConsumer>
-          </ReactToPrint>
-          <button onClick={() => getData()}>Refresh</button>
+      {addButtonName && (
+        <div className="table_button_container">
+          <h1>{header}</h1>
+          <div className="table_buttons">
+            <Link to={`/${addButtonName.replace(" ", "")}`}>{addButtonName}</Link>
+            <ReactToPrint documentTitle={header} bodyClass="printDocument" content={() => ref.current}>
+              <PrintContextConsumer>
+                {({ handlePrint }) => <button onClick={handlePrint}>Print</button>}
+              </PrintContextConsumer>
+            </ReactToPrint>
+            <button onClick={() => getData()}>Refresh</button>
+          </div>
         </div>
-      </div>
+      )}
       <div className="filter_global">
         <DebouncedInput
           value={globalFilter ?? ""}
@@ -82,7 +77,7 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
           placeholder="Search all columns..."
         />
       </div>
-      <table ref={ref} >
+      <table ref={ref}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -101,7 +96,6 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
                     </div>
                   ) : null}
                 </th>
-
               ))}
             </tr>
           ))}
@@ -110,7 +104,7 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
           {table.getRowModel().rows.map((row) => (
             <tr
               onClick={() => {
-                navigate(`${row.original._id}`);
+                navigate(`${route}${row.original._id}`);
               }}
               className="table_info_row"
               key={row.id}
@@ -134,8 +128,8 @@ const Table = ({ data, getData, header = "All Products", setAddNew, columns, add
         </tfoot>
       </table>
       <div className="h-4" />
-    </div >
+    </div>
   );
-}
+};
 
 export default Table;

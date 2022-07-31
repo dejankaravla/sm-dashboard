@@ -1,34 +1,61 @@
 import React, { useEffect, useState } from "react";
 import "./ProductCategories.css";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 import { HiOutlineTrash } from "react-icons/hi";
+import Loader from "../../components/Loader/Loader";
+import { categoriesApi } from "../../api/definitions";
 
 const ProductCategories = () => {
   const [productCategories, setProductCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newClass, setNewClass] = useState("");
+  const [newCategory, setNewCategory] = useState("");
   const [error, setError] = useState([]);
+
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
 
   const getProductCategories = () => {
     setLoading(true);
-    axios.get(`http://localhost:8000/productClasses`).then((res) => {
+    axios.get(categoriesApi).then((res) => {
       setProductCategories(res.data);
       setLoading(false);
     });
   };
 
   const createNewCategory = () => {
+    if (!newCategory) {
+      setErrorHandler("Category name is required");
+      return;
+    }
     setLoading(true);
     const newData = {
-      name: { value: newClass.toLowerCase(), label: newClass.charAt(0).toUpperCase() + newClass.slice(1) },
+      name: newCategory,
     };
     axios
-      .post(`http://localhost:8000/productClasses/`, newData)
+      .post(categoriesApi, newData)
       .then((res) => {
         getProductCategories();
-        setNewClass("");
+        setNewCategory("");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
+      });
+  };
+
+  const deleteCategory = (_id) => {
+    setLoading(true);
+    axios
+      .delete(categoriesApi + _id)
+      .then((res) => {
+        getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
@@ -40,51 +67,33 @@ const ProductCategories = () => {
       });
   };
 
-  const deleteClass = (_id) => {
-    setLoading(true);
-    axios
-      .delete(`http://localhost:8000/productClasses/${_id}`)
-      .then((res) => {
-        getProductCategories();
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(error.response.data.error);
-        setLoading(false);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
-      });
-  };
-
-  const createNewSubclass = (e, productClass) => {
-    setLoading(true);
-    const newSubclass = e.target.value;
-    const productSubclass = {
-      value: newSubclass.toLowerCase(),
-      label: newSubclass.charAt(0).toUpperCase() + newSubclass.slice(1),
-    };
-    const included = productClass.subclass.some((item) => item.value === productSubclass.value);
-
-    if (included) {
-      setError("You allready have a Class with a same name.");
-      setLoading(false);
-      setTimeout(() => {
-        setError("");
-      }, 3000);
+  const createNewSubcategory = (e, category) => {
+    const newSubcategory = e.target.value;
+    if (!newSubcategory) {
+      setErrorHandler("Subcategory name is required");
       return;
     }
 
-    productClass.subclass.push(productSubclass);
+    setLoading(true);
+    const included = category.subcategory.some((item) => item === newSubcategory);
+
+    if (included) {
+      setLoading(false);
+      setErrorHandler("Subcategory with the same name allready exists");
+      return;
+    }
+
+    category.subcategory.push(newSubcategory);
 
     axios
-      .patch(`http://localhost:8000/productClasses/`, productClass)
+      .patch(categoriesApi, category)
       .then((res) => {
         getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error);
+        console.log(error);
+        setErrorHandler(error.response.data.error);
         setLoading(false);
         setTimeout(() => {
           setError("");
@@ -92,18 +101,19 @@ const ProductCategories = () => {
       });
   };
 
-  const deleteSubclass = (productClass, productSubclass) => {
+  const deleteSubcategory = (category, subcategory) => {
     setLoading(true);
-    productClass.subclass = productClass.subclass.filter((sub) => {
-      return sub.value !== productSubclass.value;
+    category.subcategory = category.subcategory.filter((sub) => {
+      return sub !== subcategory;
     });
     axios
-      .patch(`http://localhost:8000/productClasses/`, productClass)
+      .patch(categoriesApi, category)
       .then((res) => {
         getProductCategories();
         setLoading(false);
       })
       .catch((error) => {
+        console.log(error);
         setError(error.response.data.error);
         setLoading(false);
         setTimeout(() => {
@@ -117,50 +127,48 @@ const ProductCategories = () => {
   }, []);
 
   return (
-    <div className="productClasses">
-      <div className="products_loader">
-        <ClipLoader size={100} color="red" loading={loading} />
-      </div>
+    <div className="category">
+      <Loader loading={loading} />
       {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
-      <div className="productClasses_controls">
+      <div className="category_controls">
         <input
           onChange={(e) => {
-            setNewClass(e.target.value);
+            setNewCategory(e.target.value);
           }}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               createNewCategory();
             }
           }}
-          value={newClass}
+          value={newCategory}
           placeholder="Create New Product Category"
-          name="productClass"
+          name="productCategory"
         />
         <button onClick={createNewCategory}>Submit</button>
       </div>
-      <div className="productClasses_container">
-        {productCategories.map((pClass) => {
+      <div className="category_container">
+        {productCategories.map((category) => {
           return (
-            <div className="productClass">
-              <div className="productClass_header">
-                <p>{pClass.name.label}</p>
-                <HiOutlineTrash className="class_Trash" onClick={() => deleteClass(pClass._id)} />
+            <div key={category._id} className="category_category">
+              <div className="category_category_header">
+                <p>{category.name}</p>
+                <HiOutlineTrash className="category_trash" onClick={() => deleteCategory(category._id)} />
               </div>
 
-              <div className="productSubClass_container">
-                {pClass.subclass.map((sub) => {
+              <div className="category_subcategory_container">
+                {category.subcategory.map((sub) => {
                   return (
-                    <div className="productSubClass">
-                      <span>{sub.label}</span>
-                      <HiOutlineTrash className="sub_Trash" onClick={() => deleteSubclass(pClass, sub)} />
+                    <div key={sub} className="category_subcategory">
+                      <span>{sub}</span>
+                      <HiOutlineTrash className="subcategory_trash" onClick={() => deleteSubcategory(category, sub)} />
                     </div>
                   );
                 })}
-                <div className="productSubClass_addNew">
+                <div className="category_subcategory_addNew">
                   <input
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        createNewSubclass(e, pClass);
+                        createNewSubcategory(e, category);
                         e.target.value = "";
                       }
                     }}

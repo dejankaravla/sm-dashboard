@@ -5,17 +5,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Select from "../Select/Select";
-
+import { clientsApi } from "../../api/definitions";
 
 const ClientsForm = ({ formType }) => {
-  const [clientData, setClientData] = useState([])
+  const [clientData, setClientData] = useState([]);
   const [error, setError] = useState([]);
-  const [resetUsernamePassword, setResetUsernamePassword] = useState(() => formType === 'edit')
+  const [resetUsernamePassword, setResetUsernamePassword] = useState(() => formType === "edit");
 
-  const clientTypes = [
-    { label: "Special", value: "special" },
-    { label: "Regular", value: "regular" },
-  ];
+  const clientTypes = ["Special", "Regular"];
 
   const {
     register,
@@ -23,64 +20,68 @@ const ClientsForm = ({ formType }) => {
     formState: { errors },
     control,
     watch,
-    reset
+    reset,
   } = useForm();
 
   const item = watch();
 
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
 
   const getClientData = () => {
-    axios.get(`http://localhost:8000/clients/${id}`).then((res) => {
-      setClientData(res.data)
-    }).catch((error) => {
-      console.log(error);
-    })
-  }
+    axios
+      .get(clientsApi + id)
+      .then((res) => {
+        setClientData(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorHandler(error.response.data.error);
+      });
+  };
 
   useEffect(() => {
     if (id) {
-      getClientData()
+      getClientData();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    reset({ ...clientData })
-  }, [clientData])
-
-
+    reset({ ...clientData });
+  }, [clientData]);
 
   const onSubmit = (data) => {
     if (formType === "add") {
       axios
-        .post(`http://localhost:8000/clients/`, data)
+        .post(clientsApi, data)
         .then((res) => {
-          navigate('/clients')
+          navigate("/clients");
         })
         .catch((error) => {
-          setError(error.response.data.error);
-          setTimeout(() => {
-            setError("");
-          }, 3000);
+          console.log(error);
+          setErrorHandler(error.response.data.error);
         });
     }
 
     if (formType === "edit") {
       if (resetUsernamePassword) {
-        data.username = ''
-        data.password = ''
+        data.username = "";
+        data.password = "";
       }
       axios
-        .patch(`http://localhost:8000/clients/`, data)
+        .patch(clientsApi, data)
         .then((res) => {
-          navigate(`/clients/${id}`)
+          navigate(`/clients/${id}`);
         })
         .catch((error) => {
-          setError(error.response.data.error);
-          setTimeout(() => {
-            setError("");
-          }, 3000);
+          setErrorHandler(error.response.data.error);
         });
     }
   };
@@ -97,14 +98,22 @@ const ClientsForm = ({ formType }) => {
             <input placeholder="Name" {...register("name", { required: true })} />
             {errors.name && <p className="error_message">Clients name is required.</p>}
           </div>
-          {!resetUsernamePassword ? <>  <div className="client_form_inputContainer">
-            <input placeholder="Username" {...register("username", { required: true })} />
-            {errors.username && <p className="error_message">Clients username is required.</p>}
-          </div>
-            <div className="client_form_inputContainer">
-              <input placeholder="Password" {...register("password", { required: true })} />
-              {errors.name && <p className="error_message">Clients password is required.</p>}
-            </div></> : <button type="button" onClick={() => setResetUsernamePassword(false)} className="client_form_reset">Reset Username/Password</button>}
+          {!resetUsernamePassword ? (
+            <>
+              <div className="client_form_inputContainer">
+                <input placeholder="Username" {...register("username", { required: true })} />
+                {errors.username && <p className="error_message">Clients username is required.</p>}
+              </div>
+              <div className="client_form_inputContainer">
+                <input placeholder="Password" {...register("password", { required: true })} />
+                {errors.name && <p className="error_message">Clients password is required.</p>}
+              </div>
+            </>
+          ) : (
+            <button type="button" onClick={() => setResetUsernamePassword(false)} className="client_form_reset">
+              Reset Username/Password
+            </button>
+          )}
           <div className="client_form_inputContainer">
             <Controller
               name="clientType"

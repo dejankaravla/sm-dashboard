@@ -5,11 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Select from "../Select/Select";
+import { productsApi, categoriesApi } from "../../api/definitions";
 
 function ProductForm({ formType }) {
-  const [productData, setProductData] = useState({})
-  const [productClasses, setProductClasses] = useState([])
-  const [productSubClasses, setProductSubClasses] = useState([]);
+  const [productData, setProductData] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
   const [error, setError] = useState([]);
 
@@ -17,97 +18,100 @@ function ProductForm({ formType }) {
     setSelectedFile([...e.target.files]);
   };
 
-
   const {
     register,
     handleSubmit,
-    formState: { errors, },
+    formState: { errors },
     control,
     resetField,
     watch,
-    reset
+    reset,
   } = useForm();
 
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
 
   const getProductData = () => {
     axios
-      .get(`http://localhost:8000/products/${id}`)
+      .get(productsApi + id)
       .then((res) => {
         setProductData(res.data);
       })
       .catch((error) => {
         console.log(error);
+        setErrorHandler(error.response.data.error);
       });
   };
 
-  const getProductClasses = () => {
+  const getCategories = () => {
     axios
-      .get(`http://localhost:8000/productClasses`)
+      .get(categoriesApi)
       .then((res) => {
-        setProductClasses(res.data);
+        setCategories(res.data);
       })
       .catch((error) => {
         console.log(error);
+        setErrorHandler(error.response.data.error);
       });
   };
 
   useEffect(() => {
     if (id) {
-      getProductData()
+      getProductData();
     }
-    getProductClasses()
-  }, [])
+    getCategories();
+  }, []);
 
   useEffect(() => {
-    reset({ ...productData })
-  }, [productData])
-
+    reset({ ...productData });
+  }, [productData]);
 
   const onSubmit = (data) => {
     if (formType === "add") {
-      const fd = new FormData();
+      const newFormData = new FormData();
       for (let key in data) {
-        fd.append(key, data[key]);
+        newFormData.append(key, data[key]);
       }
       for (let i = 0; i < selectedFile.length; i++) {
-        fd.append("file", selectedFile[i]);
+        newFormData.append("file", selectedFile[i]);
       }
 
       axios
-        .post(`http://localhost:8000/products/`, fd)
+        .post(productsApi, newFormData)
         .then((res) => {
-          navigate('/products')
+          navigate("/products");
         })
         .catch((error) => {
-          setError(error.response.data.error);
-          setTimeout(() => {
-            setError("");
-          }, 3000);
+          console.log(error);
+          setErrorHandler(error.response.data.error);
         });
     }
     if (formType === "edit") {
-      const fd = new FormData();
+      const newFormData = new FormData();
       for (let key in data) {
-        fd.append(key, data[key]);
+        newFormData.append(key, data[key]);
       }
       if (selectedFile.length > 0) {
         for (let i = 0; i < selectedFile.length; i++) {
-          fd.append("file", selectedFile[i]);
+          newFormData.append("file", selectedFile[i]);
         }
       }
 
       axios
-        .patch(`http://localhost:8000/products/`, fd)
+        .patch(productsApi, newFormData)
         .then((res) => {
-          navigate(`/products/${id}`)
+          navigate(`/products/${id}`);
         })
         .catch((error) => {
-          setError(error.response.data.error);
-          setTimeout(() => {
-            setError("");
-          }, 3000);
+          console.log(error);
+          setErrorHandler(error.response.data.error);
         });
     }
   };
@@ -115,19 +119,15 @@ function ProductForm({ formType }) {
   const item = watch();
 
   useEffect(() => {
-    if (item && item.productClass) {
-      for (let index = 0; index < productClasses.length; index++) {
-        if (productClasses[index].name.label === item.productClass) {
-          resetField("productSubclass");
-          setProductSubClasses([...productClasses[index].subclass]);
+    if (item && item.category) {
+      for (let index = 0; index < categories.length; index++) {
+        if (categories[index].name === item.category) {
+          resetField("subcategory");
+          setSubcategories([...categories[index].subcategory]);
         }
       }
     }
-  }, [item.productClass]);
-
-  // console.log('ITEM', item);
-  // console.log('Product Data', productData);
-  // console.log(id);
+  }, [item.category]);
 
   return (
     <div className="add">
@@ -143,7 +143,7 @@ function ProductForm({ formType }) {
           </div>
           <div className="add_inputContainer">
             <Controller
-              name="productClass"
+              name="category"
               control={control}
               rules={{
                 required: true,
@@ -151,40 +151,40 @@ function ProductForm({ formType }) {
               render={({ field: { onChange, name, value } }) => {
                 return (
                   <Select
-                    value={value || item.productClass}
+                    value={value || item.category}
                     name={name}
                     placeholder="Select Product Category"
-                    defaultValue={item.productClass}
+                    defaultValue={item.category}
                     onChange={onChange}
-                    options={productClasses.map((item) => item.name)}
+                    options={categories.map((item) => item.name)}
                   />
                 );
               }}
             />
-            {errors.productClass && <p className="error_message">Product Class is required.</p>}
+            {errors.category && <p className="error_message">Category is required.</p>}
           </div>
           <div className="add_inputContainer">
             <Controller
-              name="productSubclass"
+              name="subcategory"
               control={control}
               rules={{
                 required: true,
               }}
               render={({ field: { onChange, value, name } }) => (
                 <Select
-                  categoriesChange={productSubClasses}
+                  categoriesChange={subcategories}
                   name={name}
                   value={value}
                   placeholder="Select Product Subcategory"
                   onChange={onChange}
-                  defaultValue={item.productSubclass}
-                  isDisabled={!item.productClass}
-                  options={productSubClasses}
-                  disabled={!item.productClass && "disabled"}
+                  defaultValue={item.subcategory}
+                  isDisabled={!item.category}
+                  options={subcategories}
+                  disabled={!item.category && "disabled"}
                 />
               )}
             />
-            {errors.productSubclass && <p className="error_message">Product Subclass is required.</p>}
+            {errors.subcategory && <p className="error_message">Subcategory is required.</p>}
           </div>
           <div className="add_inputContainer">
             <input min="0" placeholder="Price" type="number" {...register("price", { required: true })} />
@@ -201,7 +201,13 @@ function ProductForm({ formType }) {
             <input type="number" min="0" placeholder="Purchase Price" {...register("purchasePrice")} />
           </div>
           <div className="add_inputContainer">
-            <input {...register('images')} onChange={(e) => setImageHandler(e)} type="file" multiple accept=".jpeg, .png, .jpg" />
+            <input
+              {...register("images")}
+              onChange={(e) => setImageHandler(e)}
+              type="file"
+              multiple
+              accept=".jpeg, .png, .jpg"
+            />
           </div>
           <input className="add_submit" type="submit" />
         </form>

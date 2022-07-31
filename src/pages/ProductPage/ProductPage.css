@@ -33,21 +33,19 @@
   display: flex;
   align-items: flex-start;
   padding: 20px;
+  gap: 20px;
 }
 
 .product_left {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  padding-right: 25px;
-  min-width: 600px;
+  min-width: 50%;
 }
 
 .product_img {
-  width: 300px;
+  width: 45%;
   border-radius: 5px;
-  flex-basis: 100%;
-  flex: 1;
   border: 1px solid black;
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.75);
 }
@@ -65,6 +63,7 @@
   align-items: baseline;
   gap: 20px;
   justify-content: center;
+  width: 100%;
 }
 
 .product_info_main p {

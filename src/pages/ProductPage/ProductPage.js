@@ -3,40 +3,52 @@ import "./ProductPage.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import ProductForm from "../../components/ProductForm/ProductForm";
 import Loader from "../../components/Loader/Loader";
+import { productsApi } from "../../api/definitions";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 function ProductPage() {
   const [productData, setProductData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState([]);
 
   let { id } = useParams();
   const navigate = useNavigate();
 
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
+
   const getProductData = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/products/${id}`)
+      .get(productsApi + id)
       .then((res) => {
         setProductData(res.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
       });
   };
-
 
   const deleteProduct = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/products/${id}`)
+      .delete(productsApi + id)
       .then((res) => {
         setLoading(false);
         navigate("/products");
       })
       .catch((error) => {
         console.log(error);
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
       });
   };
 
@@ -47,8 +59,7 @@ function ProductPage() {
   return (
     <div className="product">
       <Loader loading={loading} />
-
-
+      {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       {!loading && (
         <div className="product_container">
           <div className="product_header">
@@ -81,11 +92,11 @@ function ProductPage() {
                 </p>
                 <p>
                   <span>Category: </span>
-                  {productData.productClass && productData.productClass}
+                  {productData.category && productData.category}
                 </p>
                 <p>
                   <span>Subcategory: </span>
-                  {productData.productSubclass && productData.productSubclass}
+                  {productData.subcategory && productData.subcategory}
                 </p>
                 <p>
                   <span>Price: </span>
@@ -117,22 +128,23 @@ function ProductPage() {
                       day: "numeric",
                     })}
                 </p>
-                {productData.dateModified && <p>
-                  <span>Updated At: </span>
+                {productData.dateModified && (
+                  <p>
+                    <span>Updated At: </span>
 
-                  {new Date(productData.dateModified).toLocaleString("en-GB", {
-                    weekday: "long",
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>}
+                    {new Date(productData.dateModified).toLocaleString("en-GB", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                )}
               </div>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 }

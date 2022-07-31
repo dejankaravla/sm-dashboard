@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Select.css";
 
-const Select = ({ value, onChange, options, placeholder, disabled, categoriesChange, defaultValue }) => {
+const Select = ({ onChange, options, placeholder, disabled, categoriesChange, defaultValue }) => {
   const [inputValue, setInputValue] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
   const [optionsState, setOptionsState] = useState(options);
@@ -45,8 +45,8 @@ const Select = ({ value, onChange, options, placeholder, disabled, categoriesCha
   };
 
   const selectValueHandler = (option, text = "") => {
-    onChange(option.label);
-    setInputValue(option.label);
+    onChange(option);
+    setInputValue(option);
     setOptionsState(options);
     setClose();
   };
@@ -56,7 +56,7 @@ const Select = ({ value, onChange, options, placeholder, disabled, categoriesCha
       onChange("");
     }
 
-    const newOptionState = options.filter((item) => item.label.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
+    const newOptionState = options.filter((item) => item.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
     setOptionsState(newOptionState);
     setInputValue(value);
   };
@@ -92,8 +92,8 @@ const Select = ({ value, onChange, options, placeholder, disabled, categoriesCha
       {selectOpen && (
         <div ref={(el) => (selectResultsContainer.current = el)} className="select_Results">
           {optionsState.map((option, index) => (
-            <p key={`${option.label} ${index}`} onMouseDown={() => selectValueHandler(option)}>
-              {option.label}
+            <p key={`${option} ${index}`} onMouseDown={() => selectValueHandler(option)}>
+              {option}
             </p>
           ))}
         </div>

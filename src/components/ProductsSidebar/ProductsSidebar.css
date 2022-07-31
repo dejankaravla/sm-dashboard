@@ -23,15 +23,14 @@
   font-weight: 600;
 }
 
-.products_sidebar_classList {
+.products_sidebar_categoryList {
   padding: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* gap: 10px; */
 }
 
-.products_sidebar_classList p {
+.products_sidebar_categoryList p {
   font-size: 20px;
   font-weight: 600;
   padding: 10px 0;
@@ -42,13 +41,13 @@
   border-bottom: 1px solid #393e46;
 }
 
-.products_sidebar_classList ul {
+.products_sidebar_categoryList ul {
   display: flex;
   flex-direction: column;
   padding: 0;
 }
 
-.products_sidebar_classList li {
+.products_sidebar_categoryList li {
   list-style: none;
   font-size: 18px;
   font-weight: 600;

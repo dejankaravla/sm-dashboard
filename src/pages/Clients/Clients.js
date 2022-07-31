@@ -4,16 +4,27 @@ import axios from "axios";
 import Loader from "../../components/Loader/Loader";
 import Table from "../../components/Table/Table";
 import ClientsForm from "../../components/ClientsForm/ClientsForm";
+import { clientsColumns } from "../../components/Table/Columns";
+import { clientsApi } from "../../api/definitions";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const Clients = () => {
   const [clients, setClients] = useState([]);
   const [clientsForm, setClientsForm] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState([]);
+
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
 
   const getClients = (query) => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/clients/`, {
+      .get(clientsApi, {
         params: {
           ...query,
         },
@@ -21,58 +32,22 @@ const Clients = () => {
       .then((res) => {
         setClients(res.data);
         setLoading(false);
-      }).catch((error) => {
-        setLoading(false)
-        console.log(error);
       })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
+      });
   };
 
   useEffect(() => {
     getClients();
   }, []);
 
-  const columns = [
-    {
-      accessorKey: "name",
-      id: " Name",
-      header: () => <span>Name</span>,
-      footer: (info) => info.column.id,
-      cell: (info) => info.getValue(),
-    },
-    {
-      accessorFn: (row) => row.clientType,
-      id: "Type",
-      header: () => <span>Type</span>,
-      footer: (info) => info.column.id,
-    },
-    {
-      accessorKey: "address",
-      id: "Address",
-      header: () => <span>Address</span>,
-      footer: (info) => {
-        return info.column.id;
-      },
-    },
-    {
-      accessorFn: (row) => row.city,
-      id: "City",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>City</span>,
-      footer: (info) => info.column.id,
-    },
-
-    {
-      accessorFn: (row) => row.mobile,
-      id: "Mobile",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Mobile</span>,
-      footer: (info) => info.column.id,
-    },
-  ];
-
   return (
     <div className="clients">
       <Loader loading={loading} />
+      {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       <div className="clients_container">
         {!loading && (
           <Table
@@ -81,7 +56,7 @@ const Clients = () => {
             getData={getClients}
             header="Clients"
             data={clients}
-            columns={columns}
+            columns={clientsColumns}
           />
         )}
         {clientsForm && (

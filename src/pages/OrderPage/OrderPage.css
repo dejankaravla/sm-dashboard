@@ -1,0 +1,74 @@
+.order_page_container {
+  padding: 20px;
+}
+
+.order_page_header {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 0;
+}
+
+.order_page_controls {
+  display: flex;
+  gap: 20px;
+}
+
+.order_page_header button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #eee;
+  color: #222831;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.order_page_summary {
+  margin-bottom: 40px;
+}
+
+.printOrder {
+  padding: 20px;
+}
+
+.printOrder table thead th div {
+  display: none;
+}
+.printOrder .filter_global {
+  display: none;
+}
+
+.printOrder table tr th {
+  font-size: 14px;
+}
+.printOrder table tbody tr th {
+  font-size: 12px;
+}
+
+.printOrder table thead th {
+  font-size: 14px;
+}
+.printOrder table tbody tr td {
+  font-size: 12px;
+}
+
+.printOrder thead tr th span {
+  font-size: 14px;
+}
+
+.printOrder tfoot tr th {
+  font-size: 14px;
+}
+
+.printOrder table th {
+  padding: 10px 0;
+}
+
+.hiden {
+  display: none;
+}
+
+.printOrder div {
+  display: inline;
+}

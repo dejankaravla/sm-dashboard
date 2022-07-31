@@ -1,15 +1,15 @@
 import React from "react";
 import "./ProductsSidebar.css";
-import ProductsSidebarClasses from "./ProductsSidebarClasses";
+import Category from "./Category";
 import { Link } from "react-router-dom";
 
-function ProductsSidebar({ productClasses, getProducts, setSelectedSubcategory, selectedSubcategory }) {
+function ProductsSidebar({ categories, getProducts, setSelectedSubcategory, selectedSubcategory }) {
   return (
     <div className="products_sidebar">
       <div className="products_sidebar_add">
-        <Link to="/productClasses">Categories</Link>
+        <Link to="/categories">Categories</Link>
       </div>
-      <div className="products_sidebar_classList">
+      <div className="products_sidebar_categoryList">
         <p
           onClick={() => {
             getProducts();
@@ -20,10 +20,10 @@ function ProductsSidebar({ productClasses, getProducts, setSelectedSubcategory, 
         </p>
       </div>
 
-      {productClasses.map((item) => {
+      {categories.map((category) => {
         return (
-          <ProductsSidebarClasses
-            item={item}
+          <Category
+            category={category}
             getProducts={getProducts}
             setSelectedSubcategory={setSelectedSubcategory}
             selectedSubcategory={selectedSubcategory}

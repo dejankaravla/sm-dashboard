@@ -20,7 +20,7 @@
 }
 
 .order_left {
-  width: 50%;
+  width: 100%;
 }
 
 .order_form_products_container {
@@ -30,6 +30,7 @@
 .order_form_products_filter {
   display: flex;
   gap: 20px;
+  padding-bottom: 20px;
 }
 .order_form_products_filter input {
   background-color: #222831;
@@ -70,7 +71,7 @@
 }
 
 .order_right {
-  width: 50%;
+  width: 100%;
 }
 
 .order_summary {
@@ -143,10 +144,7 @@
   cursor: pointer;
 }
 
-.order_summary_product:hover
-  > .order_summary_product_info
-  > .order_summary_product_info_name
-  svg {
+.order_summary_product:hover > .order_summary_product_info > .order_summary_product_info_name svg {
   visibility: visible;
 }
 
@@ -173,4 +171,9 @@
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
+}
+
+.order_summary_submit_full {
+  display: flex;
+  justify-content: space-evenly;
 }

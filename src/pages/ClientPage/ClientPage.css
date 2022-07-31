@@ -31,19 +31,15 @@
 
 .client_body {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
-  padding: 20px;
+  padding: 10px 40px;
 }
 
-.client_left {
-}
-
-.client_right {
+.client_info_container {
   display: flex;
   justify-content: start;
   width: 100%;
-  margin-left: 25px;
 }
 
 .clinet_info {
@@ -54,13 +50,16 @@
 }
 
 .clinet_info p {
-  font-size: 28px;
+  font-size: 20px;
   border-bottom: 3px solid #393e46;
-  width: 100%;
   padding-bottom: 10px;
 }
 
 .clinet_info span {
   font-weight: 700;
-  font-size: 30px;
+  font-size: 20px;
+}
+
+.client_table {
+  width: 100%;
 }

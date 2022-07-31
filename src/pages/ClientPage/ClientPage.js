@@ -5,105 +5,92 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import Table from "../../components/Table/Table";
+import { clientColumns } from "../../components/Table/Columns";
+import { ordersApi, clientsApi } from "../../api/definitions";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
 
 const ClientPage = () => {
   const [clientData, setClientData] = useState([]);
+  const [clientsOrders, setClientsOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState([]);
 
   let { id } = useParams();
   const navigate = useNavigate();
 
+  const setErrorHandler = (errorMessage) => {
+    setError([errorMessage]);
+    setTimeout(() => {
+      setError("");
+    }, 3000);
+  };
+
   const getClientData = () => {
     setLoading(true);
     axios
-      .get(`http://localhost:8000/clients/${id}`)
+      .get(clientsApi + id)
       .then((res) => {
         setClientData(res.data);
         setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setErrorHandler(error.response.data.error);
+      });
+  };
+
+  const getClientsOrders = () => {
+    setLoading(true);
+    axios
+      .get(ordersApi, {
+        params: {
+          clientID: id,
+        },
+      })
+      .then((res) => {
+        setClientsOrders(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
       });
   };
 
   const deleteClient = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:8000/clients/${id}`)
+      .delete(clientsApi + id)
       .then((res) => {
         setLoading(false);
         navigate("/clients");
       })
       .catch((error) => {
         console.log(error);
+        setErrorHandler(error.response.data.error);
       });
   };
 
   useEffect(() => {
     getClientData();
+    getClientsOrders();
   }, []);
-
-  const columns = [
-    {
-      accessorKey: "orderNumber",
-      id: "Order",
-      header: () => <span>Order</span>,
-      footer: (info) => info.column.id,
-      cell: (info) => info.getValue(),
-    },
-    {
-      accessorFn: (row) => row.productSubclass,
-      id: "Price",
-      header: () => <span>Price</span>,
-      footer: (info) => info.column.id,
-    },
-    {
-      accessorFn: (row) => row.price + " €",
-      id: "Purchase Price",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Purchase Price</span>,
-      footer: (info) => info.column.id,
-    },
-    {
-      accessorKey: "quantity",
-      id: "Balance",
-      header: () => <span>Balance</span>,
-      footer: (info) => {
-        return info.column.id;
-      },
-    },
-    {
-      accessorFn: (row) => row.purchasePrice + " €",
-      id: "Date",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: () => <span>Date</span>,
-      footer: (info) => info.column.id,
-    },
-    {
-      accessorFn: (row) => row.price - row.purchasePrice + " €",
-      id: "Status",
-      cell: (info) => <i>{info.getValue()}</i>,
-      header: "Status",
-      footer: (info) => info.column.id,
-    },
-  ];
 
   return (
     <div className="client">
       <Loader loading={loading} />
+      {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       <div className="client_container">
         <div className="clinet_header">
           <h2>ID: {clientData._id}</h2>
           <div className="client_button">
-            <Link to={`/EditClient/${clientData._id}`} >Edit</Link>
+            <Link to={`/EditClient/${clientData._id}`}>Edit</Link>
             <button onClick={() => deleteClient()}>Delete</button>
           </div>
         </div>
         <div className="client_body">
-          <div className="client_left">
-            <Table addButtonName="Add Order" header="Orders" data={[]} columns={columns} />
-          </div>
-          <div className="client_right">
+          <div className="client_info_container">
             <div className="clinet_info">
               <p>
                 <span>Name: </span>
@@ -148,6 +135,16 @@ const ClientPage = () => {
                 </p>
               )}
             </div>
+          </div>
+          <div className="client_table">
+            <Table
+              addButtonName="Add Order"
+              header={`${clientData.name} Orders`}
+              data={clientsOrders}
+              columns={clientColumns}
+              route="/orders/"
+              getData={getClientsOrders}
+            />
           </div>
         </div>
       </div>

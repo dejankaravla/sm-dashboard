@@ -12,6 +12,7 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import ProductCategories from "./pages/ProductCategories/ProductCategories";
 import Orders from "./pages/Orders/Orders";
 import OrderForm from "./components/OrderForm/OrderForm";
+import OrderPage from "./pages/OrderPage/OrderPage";
 
 import { useSelector } from "react-redux";
 import ProductForm from "./components/ProductForm/ProductForm";
@@ -20,29 +21,26 @@ import ClientsForm from "./components/ClientsForm/ClientsForm";
 const App = () => {
   const isLoggedIn = useSelector(({ users }) => users.isLoggedIn);
 
-
-
   return (
     <div className="App">
       {isLoggedIn && <Navbar />}
       <Routes>
-        <Route path='/' element={isLoggedIn ? <HomePage /> : <LoginPage />} />
+        <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
         <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductPage />} />
-          <Route path="productClasses" element={<ProductCategories />} />
+          <Route path="categories" element={<ProductCategories />} />
           <Route path="clients" element={<Clients />} />
           <Route path="clients/:id" element={<ClientPage />} />
-          <Route path='orders' element={<Orders />} />
-          <Route path="AddProduct" element={<ProductForm formType='add' />} />
-          <Route path="EditProduct/:id" element={<ProductForm formType='edit' />} />
-          <Route path="AddClient" element={<ClientsForm formType='add' />} />
-          <Route path="EditClient/:id" element={<ClientsForm formType='edit' />} />
-          <Route path="AddOrder" element={<OrderForm formType='add' />} />
-          <Route path="EditOrder" element={<OrderForm formType='edit' />} />
+          <Route path="orders" element={<Orders />} />
+          <Route path="AddProduct" element={<ProductForm formType="add" />} />
+          <Route path="EditProduct/:id" element={<ProductForm formType="edit" />} />
+          <Route path="AddClient" element={<ClientsForm formType="add" />} />
+          <Route path="EditClient/:id" element={<ClientsForm formType="edit" />} />
+          <Route path="AddOrder" element={<OrderForm formType="add" />} />
+          <Route path="EditOrder" element={<OrderForm formType="edit" />} />
+          <Route path="orders/:id" element={<OrderPage />} />
         </Route>
-
-
       </Routes>
     </div>
   );
