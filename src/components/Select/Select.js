@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Select.css";
 
-const Select = ({ onChange, options, placeholder, disabled, categoriesChange, defaultValue }) => {
+const Select = ({ onChange, options, placeholder, disabled, changeEvent, defaultValue }) => {
   const [inputValue, setInputValue] = useState("");
   const [selectOpen, setSelectOpen] = useState(false);
   const [optionsState, setOptionsState] = useState(options);
@@ -22,7 +22,8 @@ const Select = ({ onChange, options, placeholder, disabled, categoriesChange, de
 
   useEffect(() => {
     setInputValue("");
-  }, [categoriesChange]);
+    onChange('')
+  }, [changeEvent]);
 
   const onMouseDown = (e) => {
     if (disabled) {
@@ -69,7 +70,7 @@ const Select = ({ onChange, options, placeholder, disabled, categoriesChange, de
           placeholder={placeholder}
           onChange={(e) => selectInputHandler(e.target.value)}
           disabled={disabled}
-          value={inputValue || defaultValue}
+          value={inputValue || defaultValue || ''}
           defaultValue={defaultValue}
         />
 

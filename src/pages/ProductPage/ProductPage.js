@@ -52,9 +52,24 @@ function ProductPage() {
       });
   };
 
+  const publishProductHandler = () => {
+    setLoading(true)
+    axios.patch(productsApi, {
+      _id: productData._id,
+      published: !productData.published
+    }).then((res) => {
+      setLoading(false)
+      getProductData()
+    }).catch((error) => {
+      setLoading(false)
+      setErrorHandler(error.response.data.error)
+    })
+  }
+
   useEffect(() => {
     getProductData();
   }, []);
+
 
   return (
     <div className="product">
@@ -67,6 +82,7 @@ function ProductPage() {
 
             <div className="product_buttons">
               <Link to={`/EditProduct/${productData._id}`}>Edit</Link>
+              <button onClick={() => publishProductHandler()}>{productData.published ? 'Unpublish' : 'Publish'}</button>
               <button onClick={() => deleteProduct()}>Delete</button>
             </div>
           </div>
@@ -97,6 +113,10 @@ function ProductPage() {
                 <p>
                   <span>Subcategory: </span>
                   {productData.subcategory && productData.subcategory}
+                </p>
+                <p>
+                  <span>Published: </span>
+                  {productData.published ? 'Yes' : 'No'}
                 </p>
                 <p>
                   <span>Price: </span>

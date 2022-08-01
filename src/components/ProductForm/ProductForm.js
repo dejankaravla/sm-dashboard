@@ -172,7 +172,7 @@ function ProductForm({ formType }) {
               }}
               render={({ field: { onChange, value, name } }) => (
                 <Select
-                  categoriesChange={subcategories}
+                  changeEvent={subcategories}
                   name={name}
                   value={value}
                   placeholder="Select Product Subcategory"

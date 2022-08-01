@@ -89,16 +89,18 @@ const OrderForm = ({ formType }) => {
   }, [selectedCategories, selectedSubcategory]);
 
   const selectClientHandler = (clientName) => {
-    const [client] = clients.filter((cli) => cli.name === clientName);
-    setSelectedClient({
-      client: client.name,
-      clientID: client._id,
-      createdBy: { name: admin, creatorId: id },
-      clientType: client.clientType,
-      address: client.address,
-      city: client.city,
-      mobile: client.mobile,
-    });
+    if (clientName) {
+      const [client] = clients.filter((cli) => cli.name === clientName);
+      setSelectedClient({
+        client: client.name,
+        clientID: client._id,
+        createdBy: { name: admin, creatorId: id },
+        clientType: client.clientType,
+        address: client.address,
+        city: client.city,
+        mobile: client.mobile,
+      });
+    }
   };
 
   const addProduct = (product) => {
@@ -174,6 +176,7 @@ const OrderForm = ({ formType }) => {
                   />
                   <Select
                     placeholder="Select Subcategory"
+                    changeEvent={selectedCategories}
                     disabled={!selectedCategories}
                     onChange={setSelectedSubcategory}
                     value={selectedSubcategory}

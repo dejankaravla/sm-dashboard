@@ -1,5 +1,7 @@
-export const loginApi = "http://localhost:8000/";
-export const ordersApi = "http://localhost:8000/orders/";
-export const clientsApi = "http://localhost:8000/clients/";
-export const categoriesApi = "http://localhost:8000/categories";
-export const productsApi = "http://localhost:8000/products/";
+export const routeUrl = 'http://192.168.0.167:8000/'
+
+export const loginApi = routeUrl;
+export const ordersApi = routeUrl + "orders/";
+export const clientsApi = routeUrl + "clients/";
+export const categoriesApi = routeUrl + "categories";
+export const productsApi = routeUrl + "products/";

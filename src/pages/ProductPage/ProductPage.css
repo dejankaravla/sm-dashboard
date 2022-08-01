@@ -29,6 +29,11 @@
   text-decoration: none;
 }
 
+.product_buttons button:first-of-type {
+  background-color: #eeeeee;
+  color: #222831;
+}
+
 .product_body {
   display: flex;
   align-items: flex-start;
