@@ -72,3 +72,60 @@
 .printOrder div {
   display: inline;
 }
+
+@media screen and (max-width: 768px) {
+  .order_page_header {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 0;
+    padding-bottom: 20px;
+  }
+  .order_page_header h2 {
+    font-size: 18px;
+  }
+  .order_page_summary {
+    display: table;
+  }
+  .order_page_container table {
+    display: table;
+  }
+  .order_page_summary tr th {
+    padding: 0 5px;
+    font-size: 14px;
+  }
+
+  .order_page_summary tbody tr th {
+    font-weight: 400;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .order_page_container {
+    padding: 10px;
+  }
+
+  .order_page_summary {
+    display: block;
+  }
+  .order_page_container table {
+    display: block;
+  }
+  .order_page_controls button {
+    font-size: 9px;
+    padding: 7px;
+  }
+  .order_page_summary {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  .order_page_summary tr th {
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .order_page_summary tbody tr th {
+    /* font-size: 14px; */
+  }
+}

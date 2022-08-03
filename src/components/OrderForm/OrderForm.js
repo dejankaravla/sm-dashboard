@@ -20,6 +20,7 @@ const OrderForm = ({ formType }) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [orderPaid, setOrderPaid] = useState(false);
+  const [mobileOrderFinish, setMobileOrderFinish] = useState(false);
 
   const { id, admin } = useSelector(({ users }) => users);
 
@@ -143,7 +144,7 @@ const OrderForm = ({ formType }) => {
           <h1>Add Order</h1>
         </div>
         <div className="order_body">
-          <div className="order_left">
+          <div className={`order_left ${mobileOrderFinish ? "order_left_disabled" : ""}`}>
             <form>
               <div className="order_form_inputContainer">
                 <Select
@@ -190,6 +191,11 @@ const OrderForm = ({ formType }) => {
                     }}
                   />
                 </div>
+                {Object.keys(selectedClient).length > 0 && selectedProducts.length > 0 && (
+                  <button type="button" onClick={() => setMobileOrderFinish(true)} className={`order_finish`}>
+                    Finish
+                  </button>
+                )}
               </div>
               <div className="order_form_products">
                 {products.length > 0 &&
@@ -200,9 +206,9 @@ const OrderForm = ({ formType }) => {
             </form>
           </div>
           {orderOpen && (
-            <div className="order_right">
+            <div className={`order_right ${!mobileOrderFinish ? "order_right_disabled" : ""}`}>
               <div className="order_summary">
-                <h3>Order</h3>
+                <h3>Order Summary</h3>
                 <div className="order_client">
                   {selectedClient && selectedClient.client && (
                     <p>
@@ -253,7 +259,7 @@ const OrderForm = ({ formType }) => {
                               <span>Balance: </span> {product.balance} €
                             </p>
                             <p>
-                              <span>Total Price: </span> {product.totalPrice} €
+                              <span>Total: </span> {product.totalPrice} €
                             </p>
                           </div>
                         </div>

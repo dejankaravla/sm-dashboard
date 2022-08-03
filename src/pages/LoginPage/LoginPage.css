@@ -15,13 +15,10 @@
   align-items: center;
   justify-content: center;
   background-color: #393e46;
-  max-width: 50%;
-  min-width: 30%;
-  min-height: 40%;
   border-radius: 10px;
   border: 3px solid #393e46;
   box-shadow: 0px 0px 50px 10px rgba(0, 0, 0, 0.75);
-  padding: 0 20px;
+  padding: 40px 80px;
 }
 
 .login_header h1 {
@@ -99,4 +96,26 @@
   color: red;
   font-size: 14px;
   letter-spacing: 2px;
+}
+
+@media screen and (max-width: 375px) {
+  .login_container {
+    padding: 40px;
+  }
+  .login_form {
+    gap: 10px;
+  }
+
+  .login_input {
+    height: 35px;
+  }
+
+  .login_input input {
+    font-size: 14px;
+  }
+
+  .login_submit {
+    font-size: 14px;
+    padding: 10px 30px;
+  }
 }

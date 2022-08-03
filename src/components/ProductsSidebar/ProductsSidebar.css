@@ -63,3 +63,9 @@
   background-color: #00adb5 !important;
   color: #eee;
 }
+
+@media screen and (max-width: 768px) {
+  .products_sidebar {
+    display: none;
+  }
+}

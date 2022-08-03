@@ -76,3 +76,16 @@ h1 {
   padding: 15px 0;
   cursor: pointer;
 }
+
+@media screen and (max-width: 425px) {
+  .addContainer {
+    width: 90%;
+    padding: 20px 0;
+  }
+  .add h1 {
+    font-size: 18px;
+  }
+  .add_submit {
+    padding: 10px 0;
+  }
+}

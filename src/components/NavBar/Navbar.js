@@ -8,8 +8,8 @@ const Navbar = () => {
 
   return (
     <div className="navbar ">
-      <div className="navbar_container navbar_container_mobile">
-        <NavLink className="navbar_logo" to="/">
+      <div className={`navbar_container ${!mobileMenu ? "navbar_container_mobile" : ""}`}>
+        <NavLink onClick={() => setMobileMenu(true)} className="navbar_logo" to="/">
           DASHBOARD
         </NavLink>
 

@@ -45,6 +45,10 @@
 /* Responsive */
 
 @media screen and (max-width: 425px) {
+  .navbar_logo {
+    font-size: 16px;
+  }
+
   .navbar_container_mobile {
     flex-direction: column;
     justify-content: center;
@@ -61,6 +65,11 @@
     background: #393e46;
     flex-direction: column;
     width: 100%;
+    padding-bottom: 10px;
+  }
+
+  .navbar_list_mobile a {
+    font-size: 14px;
   }
 
   .navbar_list_mobileDisable {

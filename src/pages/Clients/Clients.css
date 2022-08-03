@@ -1,3 +1,9 @@
 .clients_container {
-  padding: 20px;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 425px) {
+  .clients_container {
+    padding: 0;
+  }
 }

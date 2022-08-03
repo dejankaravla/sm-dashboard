@@ -82,7 +82,7 @@ const ClientPage = () => {
       <Loader loading={loading} />
       {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
       <div className="client_container">
-        <div className="clinet_header">
+        <div className="client_header">
           <h2>ID: {clientData._id}</h2>
           <div className="client_button">
             <Link to={`/EditClient/${clientData._id}`}>Edit</Link>

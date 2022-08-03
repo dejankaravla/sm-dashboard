@@ -165,3 +165,90 @@ tfoot {
 .printDocument tfoot tr th {
   font-size: 12px !important;
 }
+
+@media screen and (max-width: 768px) {
+  table {
+    overflow: auto;
+    max-width: 100%;
+    display: block;
+  }
+  .table_button_container h1 {
+    font-size: 18px;
+  }
+  .table_button_container button,
+  .table_button_container a {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .table_header_container {
+    padding: 10px 5px;
+  }
+
+  thead th div {
+    display: none;
+  }
+  .table_header {
+    font-size: 14px;
+    padding: 10px 5px;
+  }
+
+  .table_info_row {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  tfoot tr th {
+    font-size: 14px;
+    padding: 10px 5px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .products_display {
+    padding: 0;
+  }
+  table {
+    max-width: 95%;
+    align-self: center;
+  }
+  .table_button_container {
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    padding: 20px 0;
+  }
+
+  .table_button_container button,
+  .table_button_container a {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+
+  .filter_global {
+    width: unset;
+    height: 30px;
+    margin: 0 10px 10px 10px;
+  }
+
+  .filter_global input {
+    font-size: 12px;
+  }
+  .filter_global input::placeholder {
+    font-size: 12px;
+    display: none;
+  }
+
+  .table_header {
+    font-size: 12px;
+    padding: 10px 0;
+    white-space: nowrap;
+  }
+
+  tfoot tr th {
+    font-size: 12px;
+    padding: 10px 0;
+    white-space: nowrap;
+  }
+}

@@ -1,3 +1,18 @@
 .orders_container {
-  padding: 20px;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .orders_container table {
+    display: table;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .orders_container {
+    padding: 0;
+  }
+  .orders_container table {
+    display: block;
+  }
 }

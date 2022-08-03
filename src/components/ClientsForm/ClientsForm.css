@@ -59,7 +59,7 @@
 }
 
 .client_form_submit {
-  margin-top: 40px;
+  margin-top: 20px;
   color: white;
   font-size: 16px;
   border-radius: 6px;
@@ -88,4 +88,17 @@
   box-shadow: 0 0 5px 2px rgba(56, 169, 240, 0.75);
   border-color: rgba(56, 169, 240, 0.75);
   transition: 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 425px) {
+  .client_form_container {
+    width: 90%;
+    padding: 20px 0;
+  }
+  .client_form h1 {
+    font-size: 18px;
+  }
+  .client_form_submit {
+    padding: 10px 0;
+  }
 }

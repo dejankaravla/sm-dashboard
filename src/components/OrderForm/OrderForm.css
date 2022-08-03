@@ -172,9 +172,97 @@
   font-weight: 600;
   cursor: pointer;
   margin: 0 20px;
+  border: none;
 }
 
 .order_summary_submit_full {
   display: flex;
   justify-content: space-evenly;
+}
+
+.order_finish {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .order_summary_products {
+    padding: 10px 5px;
+  }
+
+  .order_summary_product_info_balance p {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .order_left_disabled {
+    display: none;
+  }
+  .order_right_disabled {
+    display: none;
+  }
+
+  .order_finish {
+    display: inline;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 6px;
+    color: #eee;
+    background-color: #00adb5;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+  }
+
+  .order_form_products_container {
+    padding: 10px 0;
+    padding-bottom: 0;
+  }
+  .order_client {
+    font-size: 14px;
+  }
+  .order_form img {
+    display: none;
+  }
+
+  .order_summary_product_info_name p {
+    font-size: 14px;
+  }
+  .order_summary_product_info_balance p {
+    font-size: 12px;
+  }
+
+  .order_summary_submit_full h3 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .order_form_container {
+    padding: 20px 5px;
+  }
+
+  .order_form h1 {
+    font-size: 18px;
+  }
+
+  .order_summary h3 {
+    font-size: 16px;
+    padding-bottom: 10px;
+  }
+
+  .order_summary {
+    width: unset;
+    padding: 10px 0;
+  }
+  .order_summary_submit_full h3 {
+    font-size: 14px;
+  }
+
+  .order_summary_product_info_balance p {
+    text-align: center;
+  }
 }

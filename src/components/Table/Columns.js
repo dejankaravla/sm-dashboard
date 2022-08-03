@@ -19,7 +19,7 @@ export const productsColumns = [
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.price + " €",
+    accessorFn: (row) => row.price,
     id: "Price",
     cell: (info) => <i>{info.getValue()}</i>,
     header: () => <span>Price</span>,
@@ -34,14 +34,14 @@ export const productsColumns = [
     },
   },
   {
-    accessorFn: (row) => row.purchasePrice + " €",
+    accessorFn: (row) => row.purchasePrice,
     id: "Purchase Price",
     cell: (info) => <i>{info.getValue()}</i>,
-    header: () => <span>Purchase Price</span>,
+    header: (info) => info.column.id,
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.price - row.purchasePrice + " €",
+    accessorFn: (row) => row.price - row.purchasePrice,
     id: "Balance",
     cell: (info) => <i>{info.getValue()}</i>,
     header: "Balance",
@@ -122,7 +122,7 @@ export const clientColumns = [
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.orderPrice + " €",
+    accessorFn: (row) => row.orderPrice,
     id: "Order Price",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,
@@ -204,7 +204,7 @@ export const orderColumns = [
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.orderPrice + " €",
+    accessorFn: (row) => row.orderPrice,
     id: "Order Price",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,
@@ -233,26 +233,26 @@ export const orderProductColumns = [
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.price + " €",
+    accessorFn: (row) => row.price,
     id: "Price",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,
   },
 
   {
-    accessorFn: (row) => row.purchasePrice + " €",
+    accessorFn: (row) => row.purchasePrice,
     id: "Purchase Price",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.totalPrice + " €",
+    accessorFn: (row) => row.totalPrice,
     id: "Total Price",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,
   },
   {
-    accessorFn: (row) => row.balance + " €",
+    accessorFn: (row) => row.balance,
     id: "Balance",
     header: (info) => info.column.id,
     footer: (info) => info.column.id,

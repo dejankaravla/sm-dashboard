@@ -53,3 +53,19 @@
   background-color: #00adb5;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .product_row_name p {
+    font-size: 14px;
+  }
+
+  .product_row_input button {
+    padding: 0 10px;
+  }
+
+  .product_row_input input {
+    padding: 5px 0;
+    width: 30px;
+    font-size: 12px;
+  }
+}

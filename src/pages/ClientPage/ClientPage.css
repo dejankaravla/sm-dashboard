@@ -1,4 +1,4 @@
-.clinet_header {
+.client_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,4 +61,40 @@
 
 .client_table {
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .client_header h2 {
+    font-size: 18px;
+  }
+  .client_body {
+    padding: 10px 20px;
+  }
+  .client_table table {
+    display: table;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .client_table table {
+    display: block;
+  }
+  .client_header {
+    padding: 30px 20px;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .client_header h2 {
+    font-size: 16px;
+  }
+
+  .client_button button,
+  .client_button a {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .clinet_info p {
+    font-size: 14px;
+  }
 }

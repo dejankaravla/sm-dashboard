@@ -1,13 +1,9 @@
-.products {
-  min-height: max-content;
-}
-
 .products_container {
   display: flex;
 }
 
 .products_display {
-  padding: 20px;
+  padding: 0 20px;
   width: 100%;
 }
 
