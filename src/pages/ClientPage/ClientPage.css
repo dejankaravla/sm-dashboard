@@ -17,7 +17,7 @@
   outline: none;
   background-color: red;
   color: white;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: 6px;
   cursor: pointer;
@@ -50,14 +50,13 @@
 }
 
 .clinet_info p {
-  font-size: 20px;
+  font-size: 18px;
   border-bottom: 3px solid #393e46;
   padding-bottom: 10px;
 }
 
 .clinet_info span {
   font-weight: 700;
-  font-size: 20px;
 }
 
 .client_table {

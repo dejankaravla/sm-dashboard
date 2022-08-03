@@ -13,14 +13,15 @@
 .products_sidebar_add a {
   width: 100%;
   border: none;
-  font-size: 20px;
+  font-size: 16px;
   background: #00adb5;
   color: #eee;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
   padding: 20px 0;
-  font-weight: 600;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
 .products_sidebar_categoryList {
@@ -31,7 +32,7 @@
 }
 
 .products_sidebar_categoryList p {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   padding: 10px 0;
   cursor: pointer;
@@ -49,7 +50,7 @@
 
 .products_sidebar_categoryList li {
   list-style: none;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   text-align: center;

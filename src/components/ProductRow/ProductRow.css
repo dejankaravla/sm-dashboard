@@ -23,7 +23,7 @@
 }
 
 .product_row_name p {
-  font-size: 20px;
+  font-size: 18px;
   width: 100%;
 }
 
@@ -48,7 +48,7 @@
   border: none;
   border-radius: 6px;
   padding: 0 20px;
-  font-size: 16px;
+  font-size: 14px;
   color: #eee;
   background-color: #00adb5;
   cursor: pointer;

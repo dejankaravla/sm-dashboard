@@ -18,8 +18,8 @@
   background: #222831;
   border-radius: 6px;
   min-width: 800px;
-  font-size: 20px;
-  padding: 15px 0;
+  font-size: 18px;
+  padding: 12px 0;
   padding-left: 10px;
   outline: none;
   color: #eee;
@@ -34,7 +34,7 @@
   border: none;
   border-radius: 6px;
   background-color: #00adb5;
-  padding: 10px 50px;
+  padding: 5px 30px;
   font-weight: 600;
   color: white;
   font-size: 16px;
@@ -55,10 +55,8 @@
 }
 
 .category_category p {
-  font-size: 30px;
-  font-weight: bold;
-  width: 150px;
-  height: 50px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 .category_subcategory_container {
@@ -76,7 +74,7 @@
 }
 
 .category_subcategory span {
-  font-size: 26px;
+  font-size: 16px;
   color: #eee;
   background: #393e46;
   display: flex;
@@ -89,7 +87,7 @@
 
 .subcategory_trash {
   color: red;
-  font-size: 30px;
+  font-size: 22px;
   cursor: pointer;
   visibility: hidden;
 }
@@ -105,7 +103,7 @@
 }
 
 .category_subcategory_addNew input {
-  font-size: 20px;
+  font-size: 16px;
   color: #222831;
   border-radius: 6px;
   visibility: hidden;
@@ -144,7 +142,7 @@
 
 .category_trash {
   color: red;
-  font-size: 30px;
+  font-size: 24px;
   cursor: pointer;
   visibility: hidden;
 }

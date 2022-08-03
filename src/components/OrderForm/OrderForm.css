@@ -44,7 +44,7 @@
 }
 
 .order_form_inputContainer input {
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 6px;
   padding: 15px 0;
   background-color: #222831;
@@ -164,13 +164,14 @@
 }
 
 .order_summary_submit {
-  padding: 10px 0;
+  padding: 10px;
   border-radius: 6px;
   color: #eee;
   background-color: #00adb5;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  margin: 0 20px;
 }
 
 .order_summary_submit_full {

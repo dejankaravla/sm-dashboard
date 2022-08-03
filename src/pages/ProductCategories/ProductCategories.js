@@ -59,11 +59,8 @@ const ProductCategories = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setError(error.response.data.error);
-        setLoading(false);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
+        console.log(error);
+        setErrorHandler(error.response.data.error);
       });
   };
 
@@ -94,10 +91,6 @@ const ProductCategories = () => {
       .catch((error) => {
         console.log(error);
         setErrorHandler(error.response.data.error);
-        setLoading(false);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
       });
   };
 
@@ -114,11 +107,7 @@ const ProductCategories = () => {
       })
       .catch((error) => {
         console.log(error);
-        setError(error.response.data.error);
-        setLoading(false);
-        setTimeout(() => {
-          setError("");
-        }, 3000);
+        setErrorHandler(error.response.data.error);
       });
   };
 

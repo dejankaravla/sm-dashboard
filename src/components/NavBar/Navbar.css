@@ -1,12 +1,13 @@
 .navbar {
   width: 100%;
   background: #393e46;
+  position: sticky;
 }
 
 .navbar_container {
   display: flex;
   padding: 0 40px;
-  height: 80px;
+  height: 60px;
   justify-content: space-between;
   align-items: center;
 }
@@ -14,7 +15,7 @@
 .navbar_logo {
   font-family: "Bungee", cursive;
   color: white;
-  font-size: 30px;
+  font-size: 25px;
   text-decoration: none;
 }
 
@@ -24,7 +25,7 @@
 }
 
 .navbar_list a {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -35,4 +36,38 @@
 
 .navbar_Link_Active {
   border-bottom: 4px solid #00adb5;
+}
+
+.mobileMenu {
+  display: none;
+}
+
+/* Responsive */
+
+@media screen and (max-width: 425px) {
+  .navbar_container_mobile {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .navbar_list_mobile {
+    padding: 0;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    background: #393e46;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .navbar_list_mobileDisable {
+    display: none;
+  }
+
+  .menuEnable {
+    display: inline;
+  }
 }

@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import { productsApi } from "../../api/definitions";
 import ErrorMessage from "../../components/ErrorMessage/ErrorMessage";
+import { routeUrl } from "../../api/definitions";
 
 function ProductPage() {
   const [productData, setProductData] = useState({});
@@ -53,23 +54,25 @@ function ProductPage() {
   };
 
   const publishProductHandler = () => {
-    setLoading(true)
-    axios.patch(productsApi, {
-      _id: productData._id,
-      published: !productData.published
-    }).then((res) => {
-      setLoading(false)
-      getProductData()
-    }).catch((error) => {
-      setLoading(false)
-      setErrorHandler(error.response.data.error)
-    })
-  }
+    setLoading(true);
+    axios
+      .patch(productsApi, {
+        _id: productData._id,
+        published: !productData.published,
+      })
+      .then((res) => {
+        setLoading(false);
+        getProductData();
+      })
+      .catch((error) => {
+        setLoading(false);
+        setErrorHandler(error.response.data.error);
+      });
+  };
 
   useEffect(() => {
     getProductData();
   }, []);
-
 
   return (
     <div className="product">
@@ -82,7 +85,7 @@ function ProductPage() {
 
             <div className="product_buttons">
               <Link to={`/EditProduct/${productData._id}`}>Edit</Link>
-              <button onClick={() => publishProductHandler()}>{productData.published ? 'Unpublish' : 'Publish'}</button>
+              <button onClick={() => publishProductHandler()}>{productData.published ? "Unpublish" : "Publish"}</button>
               <button onClick={() => deleteProduct()}>Delete</button>
             </div>
           </div>
@@ -94,7 +97,7 @@ function ProductPage() {
                     <img
                       key={img}
                       className="product_img"
-                      src={`http://localhost:8000/public/productImages/${img}`}
+                      src={`${routeUrl}public/productImages/${img}`}
                       alt="imgtesting"
                     />
                   );
@@ -116,7 +119,7 @@ function ProductPage() {
                 </p>
                 <p>
                   <span>Published: </span>
-                  {productData.published ? 'Yes' : 'No'}
+                  {productData.published ? "Yes" : "No"}
                 </p>
                 <p>
                   <span>Price: </span>

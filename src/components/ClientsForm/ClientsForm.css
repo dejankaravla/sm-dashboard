@@ -10,18 +10,13 @@
   padding: 50px 0;
   border-radius: 6px;
   background-color: #222831;
-  width: 60%;
+  width: 50%;
 }
 
 .client_form_header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
-}
-
-.client_form_header svg {
-  font-size: 36px;
-  cursor: pointer;
 }
 
 .client_form_form {
@@ -37,7 +32,7 @@
 }
 
 .client_form_inputContainer input {
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 6px;
   padding: 15px 10px;
   background-color: #222831;
@@ -58,7 +53,7 @@
 }
 
 .error_message {
-  font-size: 18px;
+  font-size: 14px;
   color: red;
   font-weight: 600;
 }
@@ -66,7 +61,7 @@
 .client_form_submit {
   margin-top: 40px;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 6px;
   font-weight: 600;
   border: none;
@@ -83,7 +78,7 @@
   background-color: #eee;
   color: #222831;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.75);
   cursor: pointer;
   transition: 0.3s ease-in-out;

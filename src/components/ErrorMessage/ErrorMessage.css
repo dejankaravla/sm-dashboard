@@ -22,7 +22,7 @@
 .errorMessage_close {
   display: flex;
   justify-content: end;
-  font-size: 36px;
+  font-size: 25px;
   cursor: pointer;
 }
 
@@ -36,11 +36,11 @@
 }
 
 .error h1 {
-  font-size: 35px;
+  font-size: 28px;
   color: red;
 }
 
 .error p {
-  font-size: 22px;
+  font-size: 18px;
   color: #eee;
 }

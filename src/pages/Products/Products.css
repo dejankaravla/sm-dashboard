@@ -11,20 +11,6 @@
   width: 100%;
 }
 
-.product_display_addProduct {
-  width: fit-content;
-  border: none;
-  font-size: 20px;
-  border-radius: 6px;
-  background: green;
-  color: white;
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: none;
-  text-align: center;
-  padding: 20px 40px;
-}
-
 .products_loader {
   position: fixed;
   top: 50%;

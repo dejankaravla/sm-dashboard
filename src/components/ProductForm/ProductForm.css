@@ -10,18 +10,13 @@
   padding: 50px 0;
   border-radius: 6px;
   background-color: #222831;
-  width: 60%;
+  width: 50%;
 }
 
 .add_header {
   display: flex;
   justify-content: space-between;
   padding-bottom: 20px;
-}
-
-.add_header svg {
-  font-size: 36px;
-  cursor: pointer;
 }
 
 h1 {
@@ -42,7 +37,7 @@ h1 {
 
 .add_inputContainer input,
 .add_inputContainer textarea {
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 6px;
   padding: 10px 10px;
   background-color: #222831;
@@ -65,7 +60,7 @@ h1 {
 }
 
 .error_message {
-  font-size: 18px;
+  font-size: 14px;
   color: red;
   font-weight: 600;
 }
@@ -73,7 +68,7 @@ h1 {
 .add_submit {
   margin-top: 20px;
   color: white;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 6px;
   font-weight: 600;
   border: none;

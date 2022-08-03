@@ -24,7 +24,7 @@ table {
   background-color: #eee;
   color: #222831;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -36,7 +36,7 @@ table {
 
 .table_header {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
 }
 th {
   padding: 20px;
@@ -79,7 +79,7 @@ th {
   background-color: #222831;
   color: #eeeeee;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   width: 100%;
   outline: none;
   padding-left: 10px;
@@ -91,8 +91,6 @@ th {
 }
 
 .filter_text {
-  font-size: 16px;
-  width: 100%;
   height: 40px;
   display: flex;
   align-items: center;
@@ -101,6 +99,8 @@ th {
   border: 1px solid #393e46;
   border-radius: 6px;
   transition: 0.3s ease-in-out;
+  width: fit-content;
+  text-align: center;
 }
 
 .filter_text input {
@@ -109,6 +109,7 @@ th {
   border: none;
   background-color: #222831;
   padding-left: 10px;
+  width: 60%;
 }
 
 .filter_text:focus-within {
@@ -139,7 +140,7 @@ th {
 }
 
 tfoot {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .printDocument {
@@ -158,11 +159,9 @@ tfoot {
 }
 
 .printDocument thead th span {
-  /* font-size: 16px; */
   font-size: 12px !important;
 }
 
 .printDocument tfoot tr th {
-  /* font-size: 16px; */
   font-size: 12px !important;
 }
