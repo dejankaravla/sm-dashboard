@@ -7,7 +7,7 @@ import Select from "../Select/Select";
 import ProductItem from "../ProductRow/ProductRow";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { ordersApi, productsApi, categoriesApi, clientsApi } from "../../api/definitions";
+import { ordersApi, productsApi, categoriesApi, clientsApi, routeUrl } from "../../api/definitions";
 
 const OrderForm = ({ formType }) => {
   const [error, setError] = useState([]);
@@ -149,7 +149,7 @@ const OrderForm = ({ formType }) => {
                 <Select
                   placeholder="Select Client"
                   onChange={selectClientHandler}
-                  options={clients.length > 0 && clients.map((client) => client.name)}
+                  options={clients.length > 0 ? clients.map((client) => client.name) : []}
                 />
               </div>
               <div className="order_form_products_container">
@@ -230,10 +230,7 @@ const OrderForm = ({ formType }) => {
                   {selectedProducts.map((product) => {
                     return (
                       <div className="order_summary_product">
-                        <img
-                          src={`http://localhost:8000/public/productImages/${product.images[0]}`}
-                          alt="product img"
-                        />
+                        <img src={`${routeUrl}public/productImages/${product.images[0]}`} alt="product img" />
                         <div className="order_summary_product_info">
                           <div className="order_summary_product_info_name">
                             <p>

@@ -22,7 +22,7 @@ const Select = ({ onChange, options, placeholder, disabled, changeEvent, default
 
   useEffect(() => {
     setInputValue("");
-    onChange('')
+    onChange("");
   }, [changeEvent]);
 
   const onMouseDown = (e) => {
@@ -70,7 +70,7 @@ const Select = ({ onChange, options, placeholder, disabled, changeEvent, default
           placeholder={placeholder}
           onChange={(e) => selectInputHandler(e.target.value)}
           disabled={disabled}
-          value={inputValue || defaultValue || ''}
+          value={inputValue || defaultValue || ""}
           defaultValue={defaultValue}
         />
 

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./ProductRow.css";
+import { routeUrl } from "../../api/definitions";
 
 const ProductRow = ({ product, addProduct }) => {
   const [selectQuantity, setSelectQuantity] = useState("");
 
   return (
     <div key={product._id} className="product_row">
-      <img src={`http://localhost:8000/public/productImages/${product.images[0]}`} alt="product img" />
+      <img src={`${routeUrl}public/productImages/${product.images[0]}`} alt="product img" />
       <div className="product_row_name">
         <p>{product.name}</p>
         <div className="product_row_input">
