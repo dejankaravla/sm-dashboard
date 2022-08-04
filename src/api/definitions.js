@@ -1,4 +1,4 @@
-export const routeUrl = "https://desolate-reef-50611.herokuapp.com/";
+export const routeUrl = "http://192.168.0.143:80/";
 
 export const loginApi = routeUrl;
 export const ordersApi = routeUrl + "orders/";
