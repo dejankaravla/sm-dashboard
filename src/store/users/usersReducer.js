@@ -9,7 +9,6 @@ const initialState = {
 };
 
 export const userReducer = (state = initialState, action) => {
-  console.log(action.payload);
   switch (action.type) {
     case USER_DATA:
       return {

@@ -10,14 +10,14 @@
   justify-content: center;
   margin: 30px 0;
   gap: 20px;
-  width: 100%;
+  width: 80%;
 }
 
 .category_controls input {
   border: 3px solid #393e46;
   background: #222831;
   border-radius: 6px;
-  min-width: 800px;
+  width: 100%;
   font-size: 18px;
   padding: 12px 0;
   padding-left: 10px;
@@ -81,7 +81,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
   padding: 10px 20px;
 }
 
@@ -112,7 +112,7 @@
   outline: none;
   padding: 10px 0;
   padding-left: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
 }
 
 .category_subcategory_addNew input::placeholder {
@@ -149,4 +149,50 @@
 
 .category_category_header:hover > .category_trash {
   visibility: visible;
+}
+
+@media screen and (max-width: 425px) {
+  .category_trash {
+    visibility: visible;
+    font-size: 18px;
+  }
+
+  .subcategory_trash {
+    visibility: visible;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .category_controls {
+    width: 90%;
+  }
+
+  .category_controls input {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+  .category_controls input::placeholder {
+    font-size: 14px;
+  }
+
+  .category_controls button {
+    font-size: 12px;
+    padding: 0 10px;
+  }
+
+  .category_category p {
+    font-size: 14px;
+  }
+
+  .category_subcategory span {
+    font-size: 12px;
+    padding: 7px 10px;
+  }
+
+  .category_subcategory_addNew input {
+    visibility: visible;
+    font-size: 12px;
+    width: 100%;
+  }
 }

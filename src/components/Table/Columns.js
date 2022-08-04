@@ -48,7 +48,8 @@ export const productsColumns = [
     footer: (info) => info.column.id,
   },
   {
-    accessorKey: "published",
+
+    accessorFn: (row) => (row.published ? "Yes" : "No"),
     id: "Published",
     header: () => <span>Published</span>,
     footer: (info) => info.column.id,

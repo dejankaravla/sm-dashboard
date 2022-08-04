@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ordersApi, productsApi, categoriesApi, clientsApi, routeUrl } from "../../api/definitions";
 
-const OrderForm = ({ formType }) => {
+const OrderForm = () => {
   const [error, setError] = useState([]);
   const [products, setProducts] = useState([]);
   const [clients, setClients] = useState([]);
