@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/NavBar/Navbar";
 import Products from "./pages/Products/Products";
@@ -13,6 +13,9 @@ import ProductCategories from "./pages/ProductCategories/ProductCategories";
 import Orders from "./pages/Orders/Orders";
 import OrderForm from "./components/OrderForm/OrderForm";
 import OrderPage from "./pages/OrderPage/OrderPage";
+import axios from "axios";
+import { routeUrl } from "./api/definitions";
+import Loader from "./components/Loader/Loader";
 
 import { useSelector } from "react-redux";
 import ProductForm from "./components/ProductForm/ProductForm";
@@ -20,13 +23,38 @@ import ClientsForm from "./components/ClientsForm/ClientsForm";
 
 const App = () => {
   const isLoggedIn = useSelector(({ users }) => users.isLoggedIn);
+  const [auth, setAuth] = useState(true)
+  const [loading, setLoading] = useState(false)
+
+  const token = localStorage.getItem('accessToken')
+
+  useEffect(() => {
+    if (token) {
+      setLoading(true)
+      axios.get(`${routeUrl}isUserAuth`, {
+        headers: {
+          "x-access-token": token
+        }
+      }).then((res) => {
+        setAuth(true)
+        setLoading(false)
+      }).catch((error) => {
+        console.log(error);
+        setAuth(false)
+        setLoading(false)
+      })
+    } else {
+      setAuth(false)
+    }
+  }, [isLoggedIn])
 
   return (
     <div className="App">
-      {isLoggedIn && <Navbar />}
-      <Routes>
-        <Route path="/" element={isLoggedIn ? <HomePage /> : <LoginPage />} />
-        <Route element={<ProtectedRoutes isLoggedIn={isLoggedIn} />}>
+      <Loader loading={loading} />
+      {!loading && auth && <Navbar />}
+      {!loading && <Routes>
+        <Route path="/" element={auth ? <HomePage /> : <LoginPage />} />
+        <Route element={<ProtectedRoutes isLoggedIn={auth} />}>
           <Route path="products" element={<Products />} />
           <Route path="products/:id" element={<ProductPage />} />
           <Route path="categories" element={<ProductCategories />} />
@@ -41,7 +69,7 @@ const App = () => {
           <Route path="EditOrder" element={<OrderForm formType="edit" />} />
           <Route path="orders/:id" element={<OrderPage />} />
         </Route>
-      </Routes>
+      </Routes>}
     </div>
   );
 };

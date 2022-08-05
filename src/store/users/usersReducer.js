@@ -1,11 +1,10 @@
 import { USER_LOGGEDIN, USER_LOGGEDOUT, SET_USER_NAME, USER_DATA } from "./usersAction";
 
-const token = window.localStorage.getItem("loginKey");
+
 const initialState = {
   isLoggedIn: false,
   id: "",
   admin: "",
-  token,
 };
 
 export const userReducer = (state = initialState, action) => {

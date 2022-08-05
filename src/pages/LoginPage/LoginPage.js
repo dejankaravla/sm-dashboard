@@ -26,6 +26,7 @@ const LoginPage = () => {
       .then((res) => {
         setLoading(false);
         console.log(res.data);
+        localStorage.setItem('accessToken', res.data.accessToken)
         dispatch(handleLogin(res.data));
       })
       .catch((error) => {
