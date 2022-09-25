@@ -21,8 +21,11 @@ const Select = ({ onChange, options, placeholder, disabled, changeEvent, default
   }, [options]);
 
   useEffect(() => {
-    setInputValue("");
-    onChange("");
+    if (changeEvent) {
+      console.log(changeEvent);
+      setInputValue("");
+      onChange("");
+    }
   }, [changeEvent]);
 
   const onMouseDown = (e) => {

@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
+import { handleLogout } from "../../store/users/usersAction";
+import { useDispatch } from "react-redux";
 
-const Navbar = () => {
+const Navbar = ({ setAuth }) => {
   const [mobileMenu, setMobileMenu] = useState(true);
+
+  const dispatch = useDispatch();
 
   return (
     <div className="navbar ">
@@ -40,13 +44,15 @@ const Navbar = () => {
           >
             Orders
           </NavLink>
-          <NavLink
-            onClick={() => setMobileMenu(true)}
-            className={({ isActive }) => (isActive ? "navbar_Link_Active" : "")}
-            to="/analytics"
+          <li
+            onClick={() => {
+              localStorage.removeItem("accessToken");
+              dispatch(handleLogout());
+              setAuth(false);
+            }}
           >
-            Analytics
-          </NavLink>
+            Logout
+          </li>
         </ul>
       </div>
     </div>

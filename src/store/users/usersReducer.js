@@ -1,6 +1,5 @@
 import { USER_LOGGEDIN, USER_LOGGEDOUT, SET_USER_NAME, USER_DATA } from "./usersAction";
 
-
 const initialState = {
   isLoggedIn: false,
   id: "",
@@ -29,8 +28,8 @@ export const userReducer = (state = initialState, action) => {
     case USER_LOGGEDOUT:
       return {
         isLoggedIn: false,
-        token: null,
-        permissions: [],
+        id: "",
+        admin: "",
       };
     default:
       return state;

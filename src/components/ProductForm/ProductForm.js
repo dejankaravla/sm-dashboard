@@ -8,9 +8,7 @@ import Select from "../Select/Select";
 import { productsApi, categoriesApi } from "../../api/definitions";
 
 function ProductForm({ formType }) {
-  const [productData, setProductData] = useState({});
   const [categories, setCategories] = useState([]);
-  const [subcategories, setSubcategories] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
   const [error, setError] = useState([]);
 
@@ -23,13 +21,13 @@ function ProductForm({ formType }) {
     handleSubmit,
     formState: { errors },
     control,
-    resetField,
     watch,
     reset,
   } = useForm();
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const item = watch();
 
   const setErrorHandler = (errorMessage) => {
     setError([errorMessage]);
@@ -42,7 +40,7 @@ function ProductForm({ formType }) {
     axios
       .get(productsApi + id)
       .then((res) => {
-        setProductData(res.data);
+        reset({ ...res.data });
       })
       .catch((error) => {
         console.log(error);
@@ -68,10 +66,6 @@ function ProductForm({ formType }) {
     }
     getCategories();
   }, []);
-
-  useEffect(() => {
-    reset({ ...productData });
-  }, [productData]);
 
   const onSubmit = (data) => {
     if (formType === "add") {
@@ -116,19 +110,6 @@ function ProductForm({ formType }) {
     }
   };
 
-  const item = watch();
-
-  useEffect(() => {
-    if (item && item.category) {
-      for (let index = 0; index < categories.length; index++) {
-        if (categories[index].name === item.category) {
-          resetField("subcategory");
-          setSubcategories([...categories[index].subcategory]);
-        }
-      }
-    }
-  }, [item.category]);
-
   return (
     <div className="add">
       {error.length > 0 && <ErrorMessage setError={setError} errorMessage={error} />}
@@ -172,14 +153,19 @@ function ProductForm({ formType }) {
               }}
               render={({ field: { onChange, value, name } }) => (
                 <Select
-                  changeEvent={subcategories}
+                  changeEvent={item.category}
                   name={name}
                   value={value}
                   placeholder="Select Product Subcategory"
                   onChange={onChange}
                   defaultValue={item.subcategory}
                   isDisabled={!item.category}
-                  options={subcategories}
+                  options={() => {
+                    if (item && item.category && categories.length > 0) {
+                      const [selectedCategory] = categories.filter((cat) => cat.name === item.category);
+                      return selectedCategory.subcategory;
+                    }
+                  }}
                   disabled={!item.category && "disabled"}
                 />
               )}

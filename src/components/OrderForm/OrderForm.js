@@ -24,6 +24,9 @@ const OrderForm = () => {
 
   const { id, admin } = useSelector(({ users }) => users);
 
+  console.log(id);
+  console.log(admin);
+
   const navigate = useNavigate();
 
   const setErrorHandler = (errorMessage) => {

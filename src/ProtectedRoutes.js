@@ -1,11 +1,8 @@
-import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
+const ProtectedRoutes = ({ isLoggedIn, token }) => {
+  return !isLoggedIn && !token ? <Navigate to="/" /> : <Outlet />;
+};
 
-
-const ProtectedRoutes = ({ isLoggedIn }) => {
-  return !isLoggedIn ? <Navigate to='/' /> : <Outlet />
-}
-
-
-export default ProtectedRoutes
+export default ProtectedRoutes;

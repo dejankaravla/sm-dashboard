@@ -24,9 +24,9 @@ const LoginPage = () => {
     axios
       .get(loginApi, { params: { ...data } })
       .then((res) => {
+        console.log(res);
         setLoading(false);
-        console.log(res.data);
-        localStorage.setItem('accessToken', res.data.accessToken)
+        localStorage.setItem("accessToken", res.data.accessToken);
         dispatch(handleLogin(res.data));
       })
       .catch((error) => {

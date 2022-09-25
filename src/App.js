@@ -16,60 +16,72 @@ import OrderPage from "./pages/OrderPage/OrderPage";
 import axios from "axios";
 import { routeUrl } from "./api/definitions";
 import Loader from "./components/Loader/Loader";
-
-import { useSelector } from "react-redux";
+import { handleLogin, handleLogout } from "./store/users/usersAction";
+import { useSelector, useDispatch } from "react-redux";
 import ProductForm from "./components/ProductForm/ProductForm";
 import ClientsForm from "./components/ClientsForm/ClientsForm";
 
 const App = () => {
   const isLoggedIn = useSelector(({ users }) => users.isLoggedIn);
-  const [auth, setAuth] = useState(true)
-  const [loading, setLoading] = useState(false)
+  const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem('accessToken')
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (token) {
-      setLoading(true)
-      axios.get(`${routeUrl}isUserAuth`, {
-        headers: {
-          "x-access-token": token
-        }
-      }).then((res) => {
-        setAuth(true)
-        setLoading(false)
-      }).catch((error) => {
-        console.log(error);
-        setAuth(false)
-        setLoading(false)
-      })
+      setLoading(true);
+      axios
+        .get(`${routeUrl}isUserAuth`, {
+          headers: {
+            "x-access-token": token,
+          },
+        })
+        .then((res) => {
+          dispatch(handleLogin(res.data));
+          setAuth(true);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch(handleLogout());
+          setAuth(false);
+          setLoading(false);
+        });
     } else {
-      setAuth(false)
+      setAuth(false);
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
+
+  console.log(isLoggedIn);
+  console.log(auth);
 
   return (
     <div className="App">
       <Loader loading={loading} />
-      {!loading && auth && <Navbar />}
-      {!loading && <Routes>
-        <Route path="/" element={auth ? <HomePage /> : <LoginPage />} />
-        <Route element={<ProtectedRoutes isLoggedIn={auth} />}>
-          <Route path="products" element={<Products />} />
-          <Route path="products/:id" element={<ProductPage />} />
-          <Route path="categories" element={<ProductCategories />} />
-          <Route path="clients" element={<Clients />} />
-          <Route path="clients/:id" element={<ClientPage />} />
-          <Route path="orders" element={<Orders />} />
-          <Route path="AddProduct" element={<ProductForm formType="add" />} />
-          <Route path="EditProduct/:id" element={<ProductForm formType="edit" />} />
-          <Route path="AddClient" element={<ClientsForm formType="add" />} />
-          <Route path="EditClient/:id" element={<ClientsForm formType="edit" />} />
-          <Route path="AddOrder" element={<OrderForm formType="add" />} />
-          <Route path="EditOrder" element={<OrderForm formType="edit" />} />
-          <Route path="orders/:id" element={<OrderPage />} />
-        </Route>
-      </Routes>}
+      {!loading && auth && <Navbar setAuth={setAuth} />}
+      {!loading && (
+        <Routes>
+          <Route path="/" element={auth ? <HomePage /> : <LoginPage />} />
+          <Route element={<ProtectedRoutes token={token} isLoggedIn={auth} />}>
+            <Route path="products" element={<Products />} />
+            <Route path="products/:id" element={<ProductPage />} />
+            <Route path="categories" element={<ProductCategories />} />
+            <Route path="clients" element={<Clients />} />
+            <Route path="clients/:id" element={<ClientPage />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="AddProduct" element={<ProductForm formType="add" />} />
+            <Route path="EditProduct/:id" element={<ProductForm formType="edit" />} />
+            <Route path="AddClient" element={<ClientsForm formType="add" />} />
+            <Route path="EditClient/:id" element={<ClientsForm formType="edit" />} />
+            <Route path="AddOrder" element={<OrderForm formType="add" />} />
+            <Route path="EditOrder" element={<OrderForm formType="edit" />} />
+            <Route path="orders/:id" element={<OrderPage />} />
+          </Route>
+        </Routes>
+      )}
     </div>
   );
 };

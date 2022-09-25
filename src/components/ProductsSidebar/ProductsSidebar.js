@@ -23,6 +23,7 @@ function ProductsSidebar({ categories, getProducts, setSelectedSubcategory, sele
       {categories.map((category) => {
         return (
           <Category
+            key={category._id}
             category={category}
             getProducts={getProducts}
             setSelectedSubcategory={setSelectedSubcategory}
