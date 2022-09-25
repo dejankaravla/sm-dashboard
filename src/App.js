@@ -23,7 +23,7 @@ import ClientsForm from "./components/ClientsForm/ClientsForm";
 
 const App = () => {
   const isLoggedIn = useSelector(({ users }) => users.isLoggedIn);
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -51,12 +51,14 @@ const App = () => {
           setLoading(false);
         });
     } else {
+      dispatch(handleLogout());
       setAuth(false);
     }
   }, [isLoggedIn]);
 
-  console.log(isLoggedIn);
   console.log(auth);
+  console.log(isLoggedIn);
+  console.log(token);
 
   return (
     <div className="App">
